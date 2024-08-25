@@ -278,11 +278,11 @@ public class interfac extends javax.swing.JFrame {
                                 .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(11, 11, 11))
         );
-        setFile(null);
+        setCurrentFile(null);
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void setFile(File file) {
+    private void setCurrentFile(File file) {
         currentFile = file;
         lbStatus.setText(currentFile != null ? currentFile.getAbsolutePath() : "Novo Arquivo");
     }
@@ -299,7 +299,7 @@ public class interfac extends javax.swing.JFrame {
     private void jMenuNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuNovoMouseClicked
         jTextAreaStatus.setText("");
         jTextArea3.setText("");
-        setFile(null);
+        setCurrentFile(null);
     }//GEN-LAST:event_jMenuNovoMouseClicked
 
     private void jMenuCopiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuCopiarMouseClicked
@@ -332,7 +332,7 @@ public class interfac extends javax.swing.JFrame {
         if (jFileChooser1.isFileSelectionEnabled()) {
             jTextArea3.setText("" + jFileChooser1.getFileView());
             jTextAreaStatus.setText("");
-            setFile(jFileChooser1.getSelectedFile());
+            setCurrentFile(jFileChooser1.getSelectedFile());
         }
 
         File file = jFileChooser1.getSelectedFile();
@@ -359,21 +359,24 @@ public class interfac extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuabrirMouseClicked
 
+    private void saveFile() {
+        try (FileWriter fileWriter = new FileWriter(currentFile)) {
+            fileWriter.write(jTextArea3.getText());
+            JOptionPane.showMessageDialog(this, "Arquivo salvo com sucesso!");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar o arquivo!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void jMenuSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuSalvarMouseClicked
-        JFileChooser fileChooser = instanceTextFileChooser("Salvar como");
-
-        int userSelection = fileChooser.showSaveDialog(this);
-
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-
-            try (FileWriter fileWriter = new FileWriter(fileToSave + ".txt")) {
-                fileWriter.write(jTextArea3.getText());
-                JOptionPane.showMessageDialog(this, "Arquivo salvo com sucesso!");
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Erro ao salvar o arquivo!", "Erro", JOptionPane.ERROR_MESSAGE);
+        if (currentFile == null) {
+            JFileChooser fileChooser = instanceTextFileChooser("Salvar como");
+            int userSelection = fileChooser.showSaveDialog(this);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                setCurrentFile(fileChooser.getSelectedFile());
             }
         }
+        saveFile();
     }//GEN-LAST:event_jMenuSalvarMouseClicked
 
     /**
