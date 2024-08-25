@@ -3,11 +3,11 @@ package main.java;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
-import java.util.ArrayList;
 
 public class interfac extends javax.swing.JFrame {
 
     private JFileChooser jFileChooser1;
+    private File currentFile;
 
     /**
      * Creates new form interfac
@@ -279,12 +279,13 @@ public class interfac extends javax.swing.JFrame {
                                 .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(11, 11, 11))
         );
-
+        setFile(null);
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void setFileLocation(File file) {
-        lbStatus.setText(file != null ? file.getAbsolutePath() : "Novo Arquivo");
+    private void setFile(File file) {
+        currentFile = file;
+        lbStatus.setText(currentFile != null ? currentFile.getAbsolutePath() : "Novo Arquivo");
     }
 
     private void jMenuEquipeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuEquipeMouseClicked
@@ -299,7 +300,7 @@ public class interfac extends javax.swing.JFrame {
     private void jMenuNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuNovoMouseClicked
         jTextAreaStatus.setText("");
         jTextArea3.setText("");
-        setFileLocation(null);
+        setFile(null);
     }//GEN-LAST:event_jMenuNovoMouseClicked
 
     private void jMenuCopiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuCopiarMouseClicked
@@ -328,7 +329,7 @@ public class interfac extends javax.swing.JFrame {
         if (jFileChooser1.isFileSelectionEnabled()) {
             jTextArea3.setText("" + jFileChooser1.getFileView());
             jTextAreaStatus.setText("");
-            setFileLocation(jFileChooser1.getSelectedFile());
+            setFile(jFileChooser1.getSelectedFile());
         }
 
         File file = jFileChooser1.getSelectedFile();
@@ -356,13 +357,10 @@ public class interfac extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuabrirMouseClicked
 
     private void jMenuSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuSalvarMouseClicked
-
         String text = jTextArea3.getText();
-
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Salvar como");
-
 
         int userSelection = fileChooser.showSaveDialog(this);
 
