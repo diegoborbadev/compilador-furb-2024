@@ -320,8 +320,9 @@ public class interfac extends javax.swing.JFrame {
 
         jFileChooser1.setCurrentDirectory(new File("."));
 
-//        FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt");
-//        jFileChooser1.setFileFilter(filter);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+        jFileChooser1.setFileFilter(filter);
+
         jFileChooser1.showOpenDialog(jTextArea3);
 
         if (jFileChooser1.isFileSelectionEnabled()) {
