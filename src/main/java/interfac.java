@@ -1,6 +1,7 @@
 package main.java;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -126,7 +127,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.setBorder(null);
 
         jMenuNovo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "novo [ctrl-n]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/novo.png"))); // NOI18N
+        jMenuNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/novo.png"))); // NOI18N
         jMenuNovo.setText("novo [ctrl-n]");
         jMenuNovo.setToolTipText("novo");
         jMenuNovo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -143,7 +144,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuNovo);
 
         jMenuabrir.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "abrir [ctrl-o]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuabrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/abrir.png"))); // NOI18N
+        jMenuabrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/abrir.png"))); // NOI18N
         jMenuabrir.setText("abrir [ctrl-o]");
         jMenuabrir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuabrir.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -160,7 +161,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuabrir.getAccessibleContext().setAccessibleDescription("novo");
 
         jMenuSalvar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "salvar [ctrl-s]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/salvar.png"))); // NOI18N
+        jMenuSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/salvar.png"))); // NOI18N
         jMenuSalvar.setText("salvar [ctrl-s]");
         jMenuSalvar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -173,7 +174,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuSalvar);
 
         jMenuCopiar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "copiar [ctrl-c]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuCopiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/copiar.png"))); // NOI18N
+        jMenuCopiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/copiar.png"))); // NOI18N
         jMenuCopiar.setText("copiar [ctrl-c]");
         jMenuCopiar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuCopiar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -186,7 +187,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuCopiar);
 
         jMenuColar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "colar [ctrl-v]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuColar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/colar.png"))); // NOI18N
+        jMenuColar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/colar.png"))); // NOI18N
         jMenuColar.setText("colar [ctrl-v]");
         jMenuColar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuColar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -199,7 +200,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuColar);
 
         jMenuRecortar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "recortar [ctrl-x]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuRecortar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recortar.png"))); // NOI18N
+        jMenuRecortar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/recortar.png"))); // NOI18N
         jMenuRecortar.setText("recortar [ctrl-x]");
         jMenuRecortar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuRecortar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -212,7 +213,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuRecortar);
 
         jMenuCompilar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "compilar [F7]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuCompilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilar.png"))); // NOI18N
+        jMenuCompilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/compilar.png"))); // NOI18N
         jMenuCompilar.setText("compilar [F7]");
         jMenuCompilar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuCompilar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -225,7 +226,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuCompilar);
 
         jMenuEquipe.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "equipe [F1]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/equipe.png"))); // NOI18N
+        jMenuEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/equipe.png"))); // NOI18N
         jMenuEquipe.setText("equipe [F1]");
         jMenuEquipe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuEquipe.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -309,24 +310,22 @@ public class interfac extends javax.swing.JFrame {
 
         jFileChooser1.setCurrentDirectory(new File("."));
 
-        //FileNameExtensionFilter filter = new FileNameExtensionFilter("txt");
-        //jFileChooser1.setFileFilter(filter);
-        int file = jFileChooser1.showOpenDialog(jTextArea3);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("txt");
+        jFileChooser1.setFileFilter(filter);
+        jFileChooser1.showOpenDialog(jTextArea3);
 
         if (jFileChooser1.isFileSelectionEnabled()) {
             jTextArea3.setText("" + jFileChooser1.getFileView());
             jTextAreaStatus.setText("");
             lbStatus.setText("" + jFileChooser1.getSelectedFile());
-        } else {
-
         }
 
-        {
+        File file = jFileChooser1.getSelectedFile();
 
-
-            ArrayList<String> dadosArray = new ArrayList<String>();
+        if(file != null) {
+            ArrayList<String> dadosArray = new ArrayList<>();
             try {
-                FileReader arq = new FileReader(jFileChooser1.getSelectedFile());
+                FileReader arq = new FileReader(file);
                 BufferedReader lerArq = new BufferedReader(arq);
 
                 String linha = "";
@@ -349,11 +348,8 @@ public class interfac extends javax.swing.JFrame {
                 System.err.println("Erro na leitura do arquivo" + e.getMessage());
             }
 
-
             jTextArea3.setText(dadosArray.toString());
         }
-
-
     }//GEN-LAST:event_jMenuabrirMouseClicked
 
     private void jMenuSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuSalvarMouseClicked
