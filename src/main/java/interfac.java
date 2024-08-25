@@ -81,7 +81,6 @@ public class interfac extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(910, 600));
-        setPreferredSize(new java.awt.Dimension(910, 600));
 
         jButton1.setText("jButton1");
 
@@ -294,7 +293,7 @@ public class interfac extends javax.swing.JFrame {
                         .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(535, 535, 535))))
         );
-        setCurrentFile(null);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
