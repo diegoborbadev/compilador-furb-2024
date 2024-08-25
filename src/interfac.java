@@ -1,28 +1,18 @@
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Insets;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.swing.JFileChooser;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.border.AbstractBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.ArrayList;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+
 /**
- *
  * @author steph
  */
 public class interfac extends javax.swing.JFrame {
@@ -76,25 +66,31 @@ public class interfac extends javax.swing.JFrame {
         jMenu1.setText("jMenu1");
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+
+            public int getSize() {
+                return strings.length;
+            }
+
+            public String getElementAt(int i) {
+                return strings[i];
+            }
         });
         jScrollPane2.setViewportView(jList1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
 
         jInternalFrame1.setVisible(true);
 
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
         jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+                jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE)
         );
         jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+                jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -126,7 +122,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.setBorder(null);
 
         jMenuNovo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "novo [ctrl-n]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/novo.png"))); // NOI18N
+        jMenuNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/novo.png"))); // NOI18N
         jMenuNovo.setText("novo [ctrl-n]");
         jMenuNovo.setToolTipText("novo");
         jMenuNovo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -143,7 +139,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuNovo);
 
         jMenuabrir.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "abrir [ctrl-o]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuabrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/abrir.png"))); // NOI18N
+        jMenuabrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/abrir.png"))); // NOI18N
         jMenuabrir.setText("abrir [ctrl-o]");
         jMenuabrir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuabrir.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -160,7 +156,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuabrir.getAccessibleContext().setAccessibleDescription("novo");
 
         jMenuSalvar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "salvar [ctrl-s]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/salvar.png"))); // NOI18N
+        jMenuSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/salvar.png"))); // NOI18N
         jMenuSalvar.setText("salvar [ctrl-s]");
         jMenuSalvar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -173,7 +169,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuSalvar);
 
         jMenuCopiar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "copiar [ctrl-c]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuCopiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/copiar.png"))); // NOI18N
+        jMenuCopiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/copiar.png"))); // NOI18N
         jMenuCopiar.setText("copiar [ctrl-c]");
         jMenuCopiar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuCopiar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -186,7 +182,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuCopiar);
 
         jMenuColar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "colar [ctrl-v]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuColar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/colar.png"))); // NOI18N
+        jMenuColar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/colar.png"))); // NOI18N
         jMenuColar.setText("colar [ctrl-v]");
         jMenuColar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuColar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -199,7 +195,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuColar);
 
         jMenuRecortar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "recortar [ctrl-x]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuRecortar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recortar.png"))); // NOI18N
+        jMenuRecortar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/recortar.png"))); // NOI18N
         jMenuRecortar.setText("recortar [ctrl-x]");
         jMenuRecortar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuRecortar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -212,7 +208,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuRecortar);
 
         jMenuCompilar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "compilar [F7]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuCompilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilar.png"))); // NOI18N
+        jMenuCompilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/compilar.png"))); // NOI18N
         jMenuCompilar.setText("compilar [F7]");
         jMenuCompilar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuCompilar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -225,7 +221,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuBar1.add(jMenuCompilar);
 
         jMenuEquipe.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "equipe [F1]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
-        jMenuEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/equipe.png"))); // NOI18N
+        jMenuEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/equipe.png"))); // NOI18N
         jMenuEquipe.setText("equipe [F1]");
         jMenuEquipe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuEquipe.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -242,41 +238,41 @@ public class interfac extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(967, 967, 967)
-                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPaneMensagem))
-                        .addGap(18, 18, 18)
-                        .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane5)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(967, 967, 967)
+                                                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jScrollPaneMensagem))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(filler1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(filler3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(151, 151, 151))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPaneMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(filler1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(filler3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(11, 11, 11)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(151, 151, 151))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jScrollPaneMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -284,7 +280,7 @@ public class interfac extends javax.swing.JFrame {
 
     private void jMenuEquipeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuEquipeMouseClicked
         // TODO add your handling code here:
-        jTextAreaStatus.setText("Equipe: Stephanie Possamai, Rian Gustavo Atanagildo e Diego Borba");
+        jTextAreaStatus.setText("Equipe: Stephanie Possamai, Rian Gustavo Atanagildo e Diego Daniel Borba");
 
     }//GEN-LAST:event_jMenuEquipeMouseClicked
 
@@ -337,7 +333,6 @@ public class interfac extends javax.swing.JFrame {
 
         {
 
-            
 
             ArrayList<String> dadosArray = new ArrayList<String>();
             try {
@@ -346,12 +341,12 @@ public class interfac extends javax.swing.JFrame {
 
                 String linha = "";
                 //while(!lerArq.readLine().isEmpty()){
-                    linha = lerArq.readLine();
-                    dadosArray.add(linha);
+                linha = lerArq.readLine();
+                dadosArray.add(linha);
                 //}
                 // criar um loop para ler varias linhas
-                
-                
+
+
                 // aqui ele printa ao contrario, arrumar essa parte
                 while (linha != null) {
                     linha = lerArq.readLine();
@@ -363,7 +358,7 @@ public class interfac extends javax.swing.JFrame {
             } catch (IOException e) {
                 System.err.println("Erro na leitura do arquivo" + e.getMessage());
             }
-            
+
 
             jTextArea1.setText(dadosArray.toString());
         }
@@ -372,24 +367,24 @@ public class interfac extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuabrirMouseClicked
 
     private void jMenuSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuSalvarMouseClicked
-        
+
         //File arquivo = new File("C:/Users/arquivo.txt");
         File arquivo = new File("C://Users//steph//OneDrive//Área de Trabalho//computação");
-        
-        
-        try {
-		arquivo.createNewFile();
-                PrintWriter gravarArq = new PrintWriter(arquivo);
 
-                gravarArq.printf(jTextArea1.getText());
-                
-                
-                jTextAreaStatus.setText("Arquivo criado com sucesso!");
-		
-			
-	} catch (IOException e) {
-		e.printStackTrace();	
-	}
+
+        try {
+            arquivo.createNewFile();
+            PrintWriter gravarArq = new PrintWriter(arquivo);
+
+            gravarArq.printf(jTextArea1.getText());
+
+
+            jTextAreaStatus.setText("Arquivo criado com sucesso!");
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jMenuSalvarMouseClicked
 
     /**
@@ -399,7 +394,7 @@ public class interfac extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
