@@ -6,7 +6,6 @@ import java.io.*;
 
 public class interfac extends javax.swing.JFrame {
 
-    private JFileChooser jFileChooser1;
     private File currentFile;
 
     /**
@@ -315,15 +314,19 @@ public class interfac extends javax.swing.JFrame {
         jTextArea3.cut();
     }//GEN-LAST:event_jMenuRecortarMouseClicked
 
-    private void jMenuabrirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuabrirMouseClicked
-        jFileChooser1 = new javax.swing.JFileChooser();
-        jFileChooser1.setVisible(rootPaneCheckingEnabled);
-
-        jFileChooser1.setCurrentDirectory(new File("."));
+    private JFileChooser instanceTextFileChooser(String dialogTitle) {
+        JFileChooser jFileChooser = new javax.swing.JFileChooser();
+        jFileChooser.setDialogTitle(dialogTitle);
+        jFileChooser.setVisible(rootPaneCheckingEnabled);
 
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
-        jFileChooser1.setFileFilter(filter);
+        jFileChooser.setFileFilter(filter);
 
+        return jFileChooser;
+    }
+
+    private void jMenuabrirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuabrirMouseClicked
+        JFileChooser jFileChooser1 = instanceTextFileChooser("Abrir");
         jFileChooser1.showOpenDialog(jTextArea3);
 
         if (jFileChooser1.isFileSelectionEnabled()) {
@@ -357,10 +360,7 @@ public class interfac extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuabrirMouseClicked
 
     private void jMenuSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuSalvarMouseClicked
-        String text = jTextArea3.getText();
-
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Salvar como");
+        JFileChooser fileChooser = instanceTextFileChooser("Salvar como");
 
         int userSelection = fileChooser.showSaveDialog(this);
 
@@ -368,7 +368,7 @@ public class interfac extends javax.swing.JFrame {
             File fileToSave = fileChooser.getSelectedFile();
 
             try (FileWriter fileWriter = new FileWriter(fileToSave + ".txt")) {
-                fileWriter.write(text);
+                fileWriter.write(jTextArea3.getText());
                 JOptionPane.showMessageDialog(this, "Arquivo salvo com sucesso!");
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Erro ao salvar o arquivo!", "Erro", JOptionPane.ERROR_MESSAGE);
