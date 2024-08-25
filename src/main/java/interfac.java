@@ -24,6 +24,7 @@ public class interfac extends javax.swing.JFrame {
      * Creates new form interfac
      */
     public interfac() {
+        this.setTitle("Compilador");
         initComponents();
     }
 
@@ -96,6 +97,7 @@ public class interfac extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTextAreaStatus1.setText("novo arquivo");
         jTextAreaStatus1.setColumns(20);
         jTextAreaStatus1.setRows(5);
         jTextAreaStatus1.setEnabled(false);
@@ -280,41 +282,33 @@ public class interfac extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuEquipeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuEquipeMouseClicked
-        // TODO add your handling code here:
-        jTextAreaStatus.setText("Equipe: Stephanie Possamai, Rian Gustavo Atanagildo e Diego Daniel Borba");
+        jTextAreaStatus.setText("Equipe: Stephanie Possamai, Rian Gustavo Atanagildo e Diego Daniel Borba!");
 
     }//GEN-LAST:event_jMenuEquipeMouseClicked
 
     private void jMenuCompilarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuCompilarMouseClicked
-        // TODO add your handling code here:
-        jTextAreaStatus.setText("compilação de programas ainda não foi implementada");
+        jTextAreaStatus.setText("Compilação de programas ainda não foi implementada!");
     }//GEN-LAST:event_jMenuCompilarMouseClicked
 
     private void jMenuNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuNovoMouseClicked
-        // TODO add your handling code here:
         jTextAreaStatus.setText("");
         jTextArea1.setText("");
         jTextAreaStatus1.setText("");
     }//GEN-LAST:event_jMenuNovoMouseClicked
 
     private void jMenuCopiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuCopiarMouseClicked
-        // TODO add your handling code here:
-
         jTextArea1.copy();
     }//GEN-LAST:event_jMenuCopiarMouseClicked
 
     private void jMenuColarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuColarMouseClicked
-        // TODO add your handling code here:
         jTextArea1.paste();
     }//GEN-LAST:event_jMenuColarMouseClicked
 
     private void jMenuRecortarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuRecortarMouseClicked
-        // TODO add your handling code here:
         jTextArea1.cut();
     }//GEN-LAST:event_jMenuRecortarMouseClicked
 
     private void jMenuabrirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuabrirMouseClicked
-        // TODO add your handling code here:
         jFileChooser1 = new javax.swing.JFileChooser();
         jFileChooser1.setVisible(rootPaneCheckingEnabled);
 
