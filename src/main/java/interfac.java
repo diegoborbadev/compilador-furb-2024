@@ -1,21 +1,9 @@
 package main.java;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.swing.JFileChooser;
+import javax.swing.*;
+import java.io.*;
 import java.util.ArrayList;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
-/**
- * @author steph
- */
 public class interfac extends javax.swing.JFrame {
 
     private JFileChooser jFileChooser1;
@@ -49,12 +37,13 @@ public class interfac extends javax.swing.JFrame {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
-        jScrollPaneMensagem = new javax.swing.JScrollPane();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTextAreaStatus = new javax.swing.JTextArea();
+        jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         ;
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextAreaStatus = new javax.swing.JTextArea();
+        jScrollPaneMensagem = new javax.swing.JScrollPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuNovo = new javax.swing.JMenu();
         jMenuabrir = new javax.swing.JMenu();
@@ -105,8 +94,17 @@ public class interfac extends javax.swing.JFrame {
 
         jButton1.setText("jButton1");
 
-        jScrollPaneMensagem.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-        jScrollPaneMensagem.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        jScrollPane1.setAlignmentX(5.0F);
+        jScrollPane1.setAlignmentY(5.0F);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setBorder(new NumberedBorder());
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jSplitPane1.setTopComponent(jScrollPane1);
 
         jTextAreaStatus.setEditable(false);
         jTextAreaStatus.setColumns(20);
@@ -115,12 +113,11 @@ public class interfac extends javax.swing.JFrame {
         jTextAreaStatus.setEnabled(false);
         jScrollPane4.setViewportView(jTextAreaStatus);
 
-        jScrollPaneMensagem.setViewportView(jScrollPane4);
+        jSplitPane1.setRightComponent(jScrollPane4);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(new NumberedBorder());
-        jScrollPane1.setViewportView(jTextArea1);
+        jScrollPaneMensagem.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPaneMensagem.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jSplitPane1.setBottomComponent(jScrollPaneMensagem);
 
         jMenuBar1.setBorder(null);
 
@@ -243,19 +240,16 @@ public class interfac extends javax.swing.JFrame {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane5)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(967, 967, 967)
                                                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jScrollPaneMensagem))
-                                                .addGap(18, 18, 18)
+                                                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 947, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(14, 14, 14)
                                                 .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
@@ -265,16 +259,11 @@ public class interfac extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(filler1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(filler3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(11, 11, 11)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(151, 151, 151))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jScrollPaneMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(14, 14, 14)
                                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -363,22 +352,24 @@ public class interfac extends javax.swing.JFrame {
 
     private void jMenuSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuSalvarMouseClicked
 
-        //File arquivo = new File("C:/Users/arquivo.txt");
-        File arquivo = new File("C://Users//steph//OneDrive//Área de Trabalho//computação");
+        String text = jTextArea1.getText();
 
 
-        try {
-            arquivo.createNewFile();
-            PrintWriter gravarArq = new PrintWriter(arquivo);
-
-            gravarArq.printf(jTextArea1.getText());
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Salvar como");
 
 
-            jTextAreaStatus.setText("Arquivo criado com sucesso!");
+        int userSelection = fileChooser.showSaveDialog(this);
 
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            try (FileWriter fileWriter = new FileWriter(fileToSave + ".txt")) {
+                fileWriter.write(text);
+                JOptionPane.showMessageDialog(this, "Arquivo salvo com sucesso!");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Erro ao salvar o arquivo!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jMenuSalvarMouseClicked
 
@@ -449,6 +440,7 @@ public class interfac extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPaneMensagem;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextAreaStatus;
     private javax.swing.JTextArea jTextAreaStatus1;
