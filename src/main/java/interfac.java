@@ -330,17 +330,14 @@ public class interfac extends javax.swing.JFrame {
         jFileChooser1.showOpenDialog(jTextArea3);
 
         if (jFileChooser1.isFileSelectionEnabled()) {
-            jTextArea3.setText("" + jFileChooser1.getFileView());
             jTextAreaStatus.setText("");
             setCurrentFile(jFileChooser1.getSelectedFile());
         }
 
-        File file = jFileChooser1.getSelectedFile();
-
-        if (file != null) {
+        if (currentFile != null) {
             StringBuilder textoEditor = new StringBuilder();
             try {
-                FileReader arq = new FileReader(file);
+                FileReader arq = new FileReader(currentFile);
                 BufferedReader lerArq = new BufferedReader(arq);
 
                 String linha;
@@ -372,9 +369,8 @@ public class interfac extends javax.swing.JFrame {
         if (currentFile == null) {
             JFileChooser fileChooser = instanceTextFileChooser("Salvar como");
             int userSelection = fileChooser.showSaveDialog(this);
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                setCurrentFile(fileChooser.getSelectedFile());
-            }
+            if (!(userSelection == JFileChooser.APPROVE_OPTION)) return;
+            setCurrentFile(fileChooser.getSelectedFile());
         }
         saveFile();
     }//GEN-LAST:event_jMenuSalvarMouseClicked
