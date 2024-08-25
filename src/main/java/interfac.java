@@ -278,7 +278,7 @@ public class interfac extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuEquipeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuEquipeMouseClicked
-        jTextArea2.setText("Equipe: Stephanie Possamai, Rian Gustavo Atanagildo e Diego Daniel Borba!");
+        jTextArea2.setText("Equipe: Stephanie Possamai, Rian Gustavo Atanagildo e Diego Daniel Borba.");
 
     }//GEN-LAST:event_jMenuEquipeMouseClicked
 
@@ -310,8 +310,8 @@ public class interfac extends javax.swing.JFrame {
 
         jFileChooser1.setCurrentDirectory(new File("."));
 
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("txt");
-        jFileChooser1.setFileFilter(filter);
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt");
+//        jFileChooser1.setFileFilter(filter);
         jFileChooser1.showOpenDialog(jTextArea3);
 
         if (jFileChooser1.isFileSelectionEnabled()) {
@@ -411,11 +411,7 @@ public class interfac extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new interfac().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new interfac().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
