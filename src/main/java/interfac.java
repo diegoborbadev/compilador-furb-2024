@@ -58,38 +58,35 @@ public class interfac extends javax.swing.JFrame {
         jMenu1.setText("jMenu1");
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
-
-            public int getSize() {
-                return strings.length;
-            }
-
-            public String getElementAt(int i) {
-                return strings[i];
-            }
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane2.setViewportView(jList1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jInternalFrame1.setVisible(true);
 
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
         jInternalFrame1Layout.setHorizontalGroup(
-                jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE)
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jInternalFrame1Layout.setVerticalGroup(
-                jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE)
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(910, 600));
+        setPreferredSize(new java.awt.Dimension(910, 600));
 
         jButton1.setText("jButton1");
 
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jSplitPane1.setMinimumSize(new java.awt.Dimension(37, 37));
 
         jTextAreaStatus.setEditable(false);
         jTextAreaStatus.setColumns(20);
@@ -106,6 +103,7 @@ public class interfac extends javax.swing.JFrame {
         jTextArea2.setEditable(false);
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
+        jTextArea2.setMinimumSize(new java.awt.Dimension(850, 150));
         jScrollPaneMensagem.setViewportView(jTextArea2);
 
         jSplitPane1.setBottomComponent(jScrollPaneMensagem);
@@ -123,13 +121,17 @@ public class interfac extends javax.swing.JFrame {
         jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
+        jTextArea3.setRows(16);
+        jTextArea3.setMinimumSize(new java.awt.Dimension(850, 250));
         jTextArea3.setBorder(new NumberedBorder());
         jScrollPane5.setViewportView(jTextArea3);
 
         jSplitPane1.setLeftComponent(jScrollPane5);
 
+        lbStatus.setMinimumSize(new java.awt.Dimension(900, 25));
+
         jMenuBar1.setBorder(null);
+        jMenuBar1.setMinimumSize(new java.awt.Dimension(900, 70));
 
         jMenuNovo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "novo [ctrl-n]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
         jMenuNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/novo.png"))); // NOI18N
@@ -139,6 +141,8 @@ public class interfac extends javax.swing.JFrame {
         jMenuNovo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuNovo.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jMenuNovo.setIconTextGap(5);
+        jMenuNovo.setMaximumSize(new java.awt.Dimension(115, 32767));
+        jMenuNovo.setMinimumSize(new java.awt.Dimension(115, 46));
         jMenuNovo.setName("novo"); // NOI18N
         jMenuNovo.setPreferredSize(new java.awt.Dimension(100, 70));
         jMenuNovo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -153,9 +157,9 @@ public class interfac extends javax.swing.JFrame {
         jMenuabrir.setText("abrir [ctrl-o]");
         jMenuabrir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuabrir.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jMenuabrir.setMinimumSize(new java.awt.Dimension(80, 70));
+        jMenuabrir.setMaximumSize(new java.awt.Dimension(115, 32767));
+        jMenuabrir.setMinimumSize(new java.awt.Dimension(115, 46));
         jMenuabrir.setName("novo"); // NOI18N
-        jMenuabrir.setOpaque(true);
         jMenuabrir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuabrirMouseClicked(evt);
@@ -171,6 +175,8 @@ public class interfac extends javax.swing.JFrame {
         jMenuSalvar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jMenuSalvar.setIconTextGap(5);
+        jMenuSalvar.setMaximumSize(new java.awt.Dimension(115, 32767));
+        jMenuSalvar.setMinimumSize(new java.awt.Dimension(115, 46));
         jMenuSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuSalvarMouseClicked(evt);
@@ -184,6 +190,8 @@ public class interfac extends javax.swing.JFrame {
         jMenuCopiar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuCopiar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jMenuCopiar.setIconTextGap(5);
+        jMenuCopiar.setMaximumSize(new java.awt.Dimension(115, 32767));
+        jMenuCopiar.setMinimumSize(new java.awt.Dimension(115, 46));
         jMenuCopiar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuCopiarMouseClicked(evt);
@@ -197,6 +205,8 @@ public class interfac extends javax.swing.JFrame {
         jMenuColar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuColar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jMenuColar.setIconTextGap(5);
+        jMenuColar.setMaximumSize(new java.awt.Dimension(115, 32767));
+        jMenuColar.setMinimumSize(new java.awt.Dimension(115, 46));
         jMenuColar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuColarMouseClicked(evt);
@@ -223,6 +233,8 @@ public class interfac extends javax.swing.JFrame {
         jMenuCompilar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuCompilar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jMenuCompilar.setIconTextGap(5);
+        jMenuCompilar.setMaximumSize(new java.awt.Dimension(115, 32767));
+        jMenuCompilar.setMinimumSize(new java.awt.Dimension(115, 46));
         jMenuCompilar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuCompilarMouseClicked(evt);
@@ -236,6 +248,8 @@ public class interfac extends javax.swing.JFrame {
         jMenuEquipe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuEquipe.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jMenuEquipe.setIconTextGap(5);
+        jMenuEquipe.setMaximumSize(new java.awt.Dimension(115, 32767));
+        jMenuEquipe.setMinimumSize(new java.awt.Dimension(115, 46));
         jMenuEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuEquipeMouseClicked(evt);
@@ -248,35 +262,37 @@ public class interfac extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(967, 967, 967)
-                                                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 947, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(lbStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(14, 14, 14)
-                                                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE))
+                    .addComponent(lbStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(filler2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filler1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(filler1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(filler3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(11, 11, 11))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(filler1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(filler3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(535, 535, 535))))
         );
         setCurrentFile(null);
         pack();
