@@ -6,6 +6,7 @@ import java.io.*;
 
 public class interfac extends javax.swing.JFrame {
 
+    private static final String NEW_LABEL_TEXT = "Novo Arquivo";
     private File currentFile;
 
     /**
@@ -133,6 +134,7 @@ public class interfac extends javax.swing.JFrame {
 
         jSplitPane1.setLeftComponent(jScrollPane5);
 
+        lbStatus.setText(NEW_LABEL_TEXT);
         lbStatus.setMinimumSize(new java.awt.Dimension(900, 25));
 
         jMenuBar1.setBorder(null);
@@ -305,7 +307,7 @@ public class interfac extends javax.swing.JFrame {
 
     private void setCurrentFile(File file) {
         currentFile = file;
-        lbStatus.setText(currentFile != null ? currentFile.getAbsolutePath() : "Novo Arquivo");
+        lbStatus.setText(currentFile != null ? currentFile.getAbsolutePath() : NEW_LABEL_TEXT);
     }
 
     private void jMenuEquipeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuEquipeMouseClicked
@@ -405,7 +407,7 @@ public class interfac extends javax.swing.JFrame {
             String fileExtension = getFileExtension(file);
             if (fileExtension == null) {
                 file = new File(file.getAbsolutePath() + ".txt");
-            } else if(!fileExtension.equals("txt")) {
+            } else if (!fileExtension.equals("txt")) {
                 JOptionPane.showMessageDialog(this, "Tipo de arquivo inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
                 jMenuSalvarMouseClicked(evt);
                 return;
