@@ -12,7 +12,6 @@ import java.util.Optional;
 
 public class interfac extends javax.swing.JFrame {
 
-    private static final String NEW_LABEL_TEXT = "Novo Arquivo";
     private File currentFile;
 
     /**
@@ -141,7 +140,6 @@ public class interfac extends javax.swing.JFrame {
 
         jSplitPane1.setLeftComponent(jScrollPane5);
 
-        lbStatus.setText(NEW_LABEL_TEXT);
         lbStatus.setMinimumSize(new java.awt.Dimension(900, 25));
 
         jMenuBar1.setBorder(null);
@@ -186,7 +184,6 @@ public class interfac extends javax.swing.JFrame {
         jMenuSalvar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "salvar [ctrl-s]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
         jMenuSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/salvar.png"))); // NOI18N
         jMenuSalvar.setText("salvar [ctrl-s]");
-        jMenuSalvar.setMnemonic(KeyEvent.VK_S);
         jMenuSalvar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jMenuSalvar.setIconTextGap(5);
@@ -342,7 +339,7 @@ public class interfac extends javax.swing.JFrame {
 
     private void setCurrentFile(File file) {
         currentFile = file;
-        lbStatus.setText(currentFile != null ? currentFile.getAbsolutePath() : NEW_LABEL_TEXT);
+        lbStatus.setText(currentFile != null ? currentFile.getAbsolutePath() : "");
     }
 
     private void jMenuEquipeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuEquipeMouseClicked
