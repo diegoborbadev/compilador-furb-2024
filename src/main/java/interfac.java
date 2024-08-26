@@ -2,7 +2,13 @@ package main.java;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.io.*;
+import java.util.Arrays;
+import java.util.Optional;
 
 public class interfac extends javax.swing.JFrame {
 
@@ -15,6 +21,7 @@ public class interfac extends javax.swing.JFrame {
     public interfac() {
         this.setTitle("Compilador");
         initComponents();
+        postInit();
     }
 
     /**
@@ -179,6 +186,7 @@ public class interfac extends javax.swing.JFrame {
         jMenuSalvar.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "salvar [ctrl-s]", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM));
         jMenuSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/resources/images/salvar.png"))); // NOI18N
         jMenuSalvar.setText("salvar [ctrl-s]");
+        jMenuSalvar.setMnemonic(KeyEvent.VK_S);
         jMenuSalvar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenuSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jMenuSalvar.setIconTextGap(5);
@@ -304,6 +312,33 @@ public class interfac extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void postInit() {
+        addKeyBind(jMenuNovo, KeyEvent.CTRL_DOWN_MASK, KeyEvent.VK_N);
+        addKeyBind(jMenuabrir, KeyEvent.CTRL_DOWN_MASK, KeyEvent.VK_O);
+        addKeyBind(jMenuSalvar, KeyEvent.CTRL_DOWN_MASK, KeyEvent.VK_S);
+        addKeyBind(jMenuCompilar, KeyEvent.KEY_LOCATION_UNKNOWN, KeyEvent.VK_F7);
+        addKeyBind(jMenuEquipe, KeyEvent.KEY_LOCATION_UNKNOWN, KeyEvent.VK_F1);
+    }
+
+    private static void addKeyBind(JMenu jMenu, int baseKey, int mainKey) {
+        Optional<MouseListener> optionalMouseListener = Arrays.stream(jMenu.getMouseListeners())
+                .filter(listener -> listener instanceof MouseAdapter && listener.getClass().getName().contains("$"))
+                .findFirst();
+        optionalMouseListener.ifPresent(mouseListener -> {
+            jMenu.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                    KeyStroke.getKeyStroke(mainKey, baseKey),
+                    jMenu.toString()
+            );
+            jMenu.getActionMap().put(jMenu.toString(), new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    jMenu.doClick();
+                    mouseListener.mouseClicked(null);
+                }
+            });
+        });
+    }
 
     private void setCurrentFile(File file) {
         currentFile = file;
