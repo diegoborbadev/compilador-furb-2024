@@ -352,8 +352,8 @@ public class interfac extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuCompilarMouseClicked
 
     private void jMenuNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuNovoMouseClicked
-        jTextAreaStatus.setText("");
         jTextArea3.setText("");
+        jTextArea2.setText("");
         setCurrentFile(null);
     }//GEN-LAST:event_jMenuNovoMouseClicked
 
