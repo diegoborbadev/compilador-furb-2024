@@ -1,5 +1,8 @@
 package main.java;
 
+import AnalizadorLexico.LexicalError;
+import AnalizadorLexico.Lexico;
+import AnalizadorLexico.Token;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
@@ -348,7 +351,24 @@ public class interfac extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuEquipeMouseClicked
 
     private void jMenuCompilarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuCompilarMouseClicked
-        jTextArea2.setText("Compilação de programas ainda não foi implementada!");
+        //jTextArea2.setText("Compilação de programas ainda não foi implementada!");
+        Lexico lexico = new Lexico();
+//...
+        lexico.setInput(jTextArea3.getText());
+
+        String mensagem = "";
+//...
+        try {
+            Token t = null;
+            while ((t = lexico.nextToken()) != null) {
+                //System.out.println(t.getLexeme());
+                mensagem+=t.getLexeme();
+                jTextArea2.setText(mensagem);
+            }
+        } catch (LexicalError e) {
+            //System.err.println(e.getMessage() + "e;, em "e;+e.getPosition());
+            System.err.println(e.getMessage() + "e;, em "+e.getPosition());
+        }
     }//GEN-LAST:event_jMenuCompilarMouseClicked
 
     private void jMenuNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuNovoMouseClicked
@@ -397,7 +417,9 @@ public class interfac extends javax.swing.JFrame {
 
                 String linha;
                 while ((linha = lerArq.readLine()) != null) {
-                    if (!textoEditor.isEmpty()) textoEditor.append(System.lineSeparator());
+                    if (!textoEditor.isEmpty()) {
+                        textoEditor.append(System.lineSeparator());
+                    }
                     textoEditor.append(linha);
                 }
 
@@ -421,7 +443,9 @@ public class interfac extends javax.swing.JFrame {
     }
 
     public static String getFileExtension(File file) {
-        if (file == null) return null;
+        if (file == null) {
+            return null;
+        }
 
         String fileName = file.getName();
         int lastIndexOfDot = fileName.lastIndexOf('.');
@@ -434,7 +458,9 @@ public class interfac extends javax.swing.JFrame {
         if (currentFile == null) {
             JFileChooser fileChooser = instanceTextFileChooser("Salvar como");
             int userSelection = fileChooser.showSaveDialog(this);
-            if (!(userSelection == JFileChooser.APPROVE_OPTION)) return;
+            if (!(userSelection == JFileChooser.APPROVE_OPTION)) {
+                return;
+            }
             File file = fileChooser.getSelectedFile();
             String fileExtension = getFileExtension(file);
             if (fileExtension == null) {
