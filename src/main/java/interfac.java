@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class interfac extends javax.swing.JFrame {
      */
     public interfac() {
         this.setTitle("Compilador");
+        
         initComponents();
         postInit();
     }
@@ -355,22 +357,81 @@ public class interfac extends javax.swing.JFrame {
         Lexico lexico = new Lexico();
 //...
         lexico.setInput(jTextArea3.getText());
-
-        String mensagem = "";
+        ArrayList<String> lexemas = new ArrayList<>();
+        ArrayList<Integer> classes = new ArrayList<>();
+        ArrayList<Integer> linhas = new ArrayList<>();
+        
+        
+        
+        
+       
+        String mensagem = "Linha     Classe      Lexema\n";
 //...
         try {
             Token t = null;
+            
             while ((t = lexico.nextToken()) != null) {
                 //System.out.println(t.getLexeme());
-                mensagem+=t.getLexeme();
-                jTextArea2.setText(mensagem);
+                //mensagem+=t.getLexeme() + t.getPosition() + t.getId();
+                //lexemas.add(t.getLexeme());
+                //classes.add(t.getId());
+               mensagem +=((jTextArea3.getLineCount())+"   "+ classesId(t.getId()) +"      "+t.getLexeme() + "\n");
+                //linhas.add(jTextArea3.getLineCount());
+                
+                
             }
+            
+            //classes(classes);
+            
+            
+            
+            //jTextArea2.setText(linhas.toString());
+            jTextArea2.setText(mensagem);
+            
         } catch (LexicalError e) {
             //System.err.println(e.getMessage() + "e;, em "e;+e.getPosition());
             System.err.println(e.getMessage() + "e;, em "+e.getPosition());
         }
+        
+        
+        
+        
     }//GEN-LAST:event_jMenuCompilarMouseClicked
 
+    
+    public String classesId(Integer id){
+        
+        
+        String classe = "";
+            if(id==2){
+                classe = "Identificador";
+            }
+        
+            if(id>=3 && id<=15){
+                classe = ("palavra reservada");
+            }
+            if(id==16){
+                classe =("identificador");
+            }
+            if(id==17){
+                classe =("constante_int");
+            }
+            if(id==18){
+                classe =("constante_float");
+            }
+            if(id==19){
+                classe =("constante_String");
+            }
+            if(id>=20 && id<=35){
+                classe =("Símbolo especial");
+            }
+         
+        
+        
+        return classe;
+    }
+    
+    
     private void jMenuNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuNovoMouseClicked
         jTextArea3.setText("");
         jTextArea2.setText("");
