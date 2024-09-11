@@ -358,39 +358,32 @@ public class interfac extends javax.swing.JFrame {
 //...
         lexico.setInput(jTextArea3.getText());
         ArrayList<String> lexemas = new ArrayList<>();
-        ArrayList<Integer> classes = new ArrayList<>();
+        //ArrayList<Integer> classes = new ArrayList<>();
         ArrayList<Integer> linhas = new ArrayList<>();
         
         
-        
-        
-       
         String mensagem = "Linha     Classe      Lexema\n";
 //...
         try {
             Token t = null;
             
+            
+            
             while ((t = lexico.nextToken()) != null) {
-                //System.out.println(t.getLexeme());
-                //mensagem+=t.getLexeme() + t.getPosition() + t.getId();
-                //lexemas.add(t.getLexeme());
+                
+                lexemas.add(t.getLexeme());
                 //classes.add(t.getId());
-               mensagem +=((jTextArea3.getLineCount())+"   "+ classesId(t.getId()) +"      "+t.getLexeme() + "\n");
-                //linhas.add(jTextArea3.getLineCount());
-                
-                
+               mensagem +=((jTextArea3.getLineCount())  +"   "+ classesId(t.getId()) +"      "+t.getLexeme() + "\n");
+               
             }
             
-            //classes(classes);
             
-            
-            
-            //jTextArea2.setText(linhas.toString());
             jTextArea2.setText(mensagem);
             
         } catch (LexicalError e) {
-            //System.err.println(e.getMessage() + "e;, em "e;+e.getPosition());
-            System.err.println(e.getMessage() + "e;, em "+e.getPosition());
+            
+            jTextArea2.setText(e.getMessage() + " em "+e.getPosition() + " - Erro após " + lexemas.get(lexemas.size() - 1) );
+            //System.err.println(e.getMessage() + "e;, em "+e.getPosition());
         }
         
         
