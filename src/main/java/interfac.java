@@ -13,6 +13,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.text.BadLocationException;
 
 public class interfac extends javax.swing.JFrame {
 
@@ -360,31 +363,36 @@ public class interfac extends javax.swing.JFrame {
         ArrayList<String> lexemas = new ArrayList<>();
         //ArrayList<Integer> classes = new ArrayList<>();
         ArrayList<Integer> linhas = new ArrayList<>();
-        
+   
         
         String mensagem = "Linha     Classe      Lexema\n";
 //...
         try {
-            Token t = null;
+            Token t;
+        
+        while ((t = lexico.nextToken()) != null) {
+            lexemas.add(t.getLexeme());
+            
+           
+            String texto = jTextArea3.getText();
+            int index = texto.indexOf(t.getLexeme());
+              
+            int linha = jTextArea3.getLineOfOffset(index);
+            
+            linhas.add(linha);
             
             
-            
-            while ((t = lexico.nextToken()) != null) {
-                
-                lexemas.add(t.getLexeme());
-                //classes.add(t.getId());
-               mensagem +=((jTextArea3.getLineCount())  +"   "+ classesId(t.getId()) +"      "+t.getLexeme() + "\n");
-               
-            }
-            
-            
-            jTextArea2.setText(mensagem);
-            
-        } catch (LexicalError e) {
-            
-            jTextArea2.setText(e.getMessage() + " em "+e.getPosition() + " - Erro após " + lexemas.get(lexemas.size() - 1) );
-            //System.err.println(e.getMessage() + "e;, em "+e.getPosition());
+            mensagem += (linha + "   " + classesId(t.getId()) + "      " + t.getLexeme() + "\n");
         }
+        
+        jTextArea2.setText(mensagem);
+        
+    } catch (BadLocationException e) {
+        e.printStackTrace();
+        jTextArea2.setText("Erro ao determinar a linha: " + e.getMessage());
+    } catch (LexicalError e) {
+        jTextArea2.setText(e.getMessage() + " em " + e.getPosition() + " - Erro após " + lexemas.get(lexemas.size() - 1));
+    }
         
         
         
