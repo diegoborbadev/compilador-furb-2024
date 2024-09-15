@@ -14,6 +14,8 @@ import java.awt.event.MouseListener;
 import java.io.*;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class interfac extends javax.swing.JFrame {
 
@@ -364,7 +366,7 @@ public class interfac extends javax.swing.JFrame {
                 Token t;
                 while ((t = lexico.nextToken()) != null) {
                     int linha = getLinhaByLexeme(t.getLexeme());
-                    tabela.adicionarToken(linha, classesId(t.getId()), t.getLexeme());
+                    tabela.adicionarToken(linha, classesId(t.getId(), t.getLexeme(), linha), t.getLexeme());
                 }
                 jTextArea2.setText(tabela.gerarTabela());
             } catch (LexicalError e) {
@@ -387,6 +389,8 @@ public class interfac extends javax.swing.JFrame {
 
                 erro.append(msgErro);
                 jTextArea2.setText(erro.toString());
+            } catch (Exception ex) {
+                Logger.getLogger(interfac.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (BadLocationException e) {
             jTextArea2.setText("Erro ao determinar a linha: " + e.getMessage());
@@ -408,13 +412,18 @@ public class interfac extends javax.swing.JFrame {
         return jTextArea3.getLineOfOffset(index) + 1;
     }
 
-    private String classesId(Integer id) {
+    private String classesId(Integer id, String lexema, int linha) throws Exception {
         switch (id) {
             case 2:
                 //jTextArea2.setText( lexema + "palavra reservada inválida");
-                return "palavra reservada inválida";   
-                //LexicalError(linha+"palavra reservada inválida error");  // retornar erro
-                
+                //return "palavra reservada inválida";   
+                //throw LexicalError("palavra reservada inválida error");  // retornar erro
+                try {
+                jTextArea2.setText("Linha "+linha+": "+lexema+" palavra reservada inválida");
+                throw new Exception("palavra reservada inválida error");
+            } catch (Exception e) {
+                throw new Exception("palavra reservada inválida error");
+            }
             case 16:
                 return "identificador";
             case 17:
