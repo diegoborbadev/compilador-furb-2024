@@ -35,9 +35,18 @@ public class TabelaTokens {
 
     public String gerarTabela() {
         StringBuilder tabela = new StringBuilder();
-        String formato = "%-" + maxLinhaLength + "s %-" + maxClasseLength + "s %-" + maxLexemaLength + "s%n";
+        String formato = "%-" + maxLinhaLength + "s  %-" + maxClasseLength + "s  %-" + maxLexemaLength + "s%n";
         tabela.append(String.format(formato, "Linha", "Classe", "Lexema"));
+
         tokens.forEach(token -> tabela.append(String.format(formato, token.linha, token.classe, token.lexema)));
+        tabela.append("\n");
+
+        String mensagem = "programa compilado com sucesso";
+        int larguraTotal = maxLinhaLength + maxClasseLength + maxLexemaLength + 4;
+        int padding = (larguraTotal - mensagem.length()) / 2;
+        String formatoMensagem = "%" + (padding + mensagem.length()) + "s%n";
+
+        tabela.append(String.format(formatoMensagem, mensagem));
         return tabela.toString();
     }
 
