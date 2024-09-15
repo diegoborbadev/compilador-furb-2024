@@ -3,8 +3,11 @@ package main.java;
 import AnalizadorLexico.LexicalError;
 import AnalizadorLexico.Lexico;
 import AnalizadorLexico.Token;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.BadLocationException;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -13,9 +16,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.swing.text.BadLocationException;
 
 public class interfac extends javax.swing.JFrame {
 
@@ -26,7 +26,7 @@ public class interfac extends javax.swing.JFrame {
      */
     public interfac() {
         this.setTitle("Compilador");
-        
+
         initComponents();
         postInit();
     }
@@ -73,31 +73,25 @@ public class interfac extends javax.swing.JFrame {
         jMenu1.setText("jMenu1");
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
-
-            public int getSize() {
-                return strings.length;
-            }
-
-            public String getElementAt(int i) {
-                return strings[i];
-            }
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane2.setViewportView(jList1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jInternalFrame1.setVisible(true);
 
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
         jInternalFrame1Layout.setHorizontalGroup(
-                jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE)
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jInternalFrame1Layout.setVerticalGroup(
-                jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE)
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -122,6 +116,7 @@ public class interfac extends javax.swing.JFrame {
 
         jTextArea2.setEditable(false);
         jTextArea2.setColumns(20);
+        jTextArea2.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
         jTextArea2.setRows(5);
         jTextArea2.setMinimumSize(new java.awt.Dimension(850, 150));
         jScrollPaneMensagem.setViewportView(jTextArea2);
@@ -141,6 +136,7 @@ public class interfac extends javax.swing.JFrame {
         jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jTextArea3.setColumns(20);
+        jTextArea3.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
         jTextArea3.setRows(16);
         jTextArea3.setMinimumSize(new java.awt.Dimension(850, 250));
         jTextArea3.setBorder(new NumberedBorder());
@@ -282,37 +278,37 @@ public class interfac extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE))
-                                        .addComponent(lbStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(15, 15, 15)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(filler2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(filler1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE))
+                    .addComponent(lbStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(filler2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filler1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap())
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(filler1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(filler3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                                                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(535, 535, 535))))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(filler1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(filler3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(535, 535, 535))))
         );
 
         pack();
@@ -356,83 +352,52 @@ public class interfac extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuEquipeMouseClicked
 
     private void jMenuCompilarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuCompilarMouseClicked
-        //jTextArea2.setText("Compilação de programas ainda não foi implementada!");
         Lexico lexico = new Lexico();
-//...
         lexico.setInput(jTextArea3.getText());
         ArrayList<String> lexemas = new ArrayList<>();
-        //ArrayList<Integer> classes = new ArrayList<>();
-        ArrayList<Integer> linhas = new ArrayList<>();
-   
-        
-        String mensagem = "Linha     Classe      Lexema\n";
-//...
+
+        TabelaTokens tabela = new TabelaTokens();
         try {
             Token t;
-        
-        while ((t = lexico.nextToken()) != null) {
-            lexemas.add(t.getLexeme());
-            
-           
-            String texto = jTextArea3.getText();
-            int index = texto.indexOf(t.getLexeme());
-              
-            int linha = jTextArea3.getLineOfOffset(index);
-            
-            linhas.add(linha);
-            
-            
-            mensagem += (linha + "   " + classesId(t.getId()) + "      " + t.getLexeme() + "\n");
+            while ((t = lexico.nextToken()) != null) {
+                lexemas.add(t.getLexeme());
+                String texto = jTextArea3.getText();
+                int index = texto.indexOf(t.getLexeme());
+                int linha = jTextArea3.getLineOfOffset(index) + 1;
+                tabela.adicionarToken(linha, classesId(t.getId()), t.getLexeme());
+            }
+            jTextArea2.setText(tabela.gerarTabela());
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+            jTextArea2.setText("Erro ao determinar a linha: " + e.getMessage());
+        } catch (LexicalError e) {
+            jTextArea2.setText(e.getMessage() + " em " + e.getPosition() + " - Erro após " + lexemas.getLast());
         }
-        
-        jTextArea2.setText(mensagem);
-        
-    } catch (BadLocationException e) {
-        e.printStackTrace();
-        jTextArea2.setText("Erro ao determinar a linha: " + e.getMessage());
-    } catch (LexicalError e) {
-        jTextArea2.setText(e.getMessage() + " em " + e.getPosition() + " - Erro após " + lexemas.get(lexemas.size() - 1));
-    }
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_jMenuCompilarMouseClicked
 
-    
-    public String classesId(Integer id){
-        
-        
-        String classe = "";
-            if(id==2){
-                classe = "Identificador";
-            }
-        
-            if(id>=3 && id<=15){
-                classe = ("palavra reservada");
-            }
-            if(id==16){
-                classe =("identificador");
-            }
-            if(id==17){
-                classe =("constante_int");
-            }
-            if(id==18){
-                classe =("constante_float");
-            }
-            if(id==19){
-                classe =("constante_String");
-            }
-            if(id>=20 && id<=35){
-                classe =("Símbolo especial");
-            }
-         
-        
-        
-        return classe;
+    public String classesId(Integer id) {
+        switch (id) {
+            case 2, 16:
+                return "identificador";
+            case 17:
+                return "constante_int";
+            case 18:
+                return "constante_float";
+            case 19:
+                return "constante_String";
+            default:
+                if (id >= 3 && id <= 15) {
+                    return "palavra reservada";
+                }
+                if (id >= 20 && id <= 35) {
+                    return "símbolo especial";
+                }
+                return "";
+        }
     }
-    
-    
+
     private void jMenuNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuNovoMouseClicked
         jTextArea3.setText("");
         jTextArea2.setText("");
