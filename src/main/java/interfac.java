@@ -380,7 +380,6 @@ public class interfac extends javax.swing.JFrame {
                         erro.append(chr).append(" ");
                     }
                     case "palavra reservada inválida", "identificador inválido" -> {
-                        char chr = getTextoEditor().charAt(e.getPosition());
                         String palavra = getTextoEditor().substring(e.getPosition());
                         erro.append(palavra).append(" ");
                     }
