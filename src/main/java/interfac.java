@@ -410,7 +410,12 @@ public class interfac extends javax.swing.JFrame {
 
     private String classesId(Integer id) {
         switch (id) {
-            case 2, 16:
+            case 2:
+                //jTextArea2.setText( lexema + "palavra reservada inválida");
+                return "palavra reservada inválida";   
+                //LexicalError(linha+"palavra reservada inválida error");  // retornar erro
+                
+            case 16:
                 return "identificador";
             case 17:
                 return "constante_int";
