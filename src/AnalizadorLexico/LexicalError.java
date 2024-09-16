@@ -1,14 +1,19 @@
 package AnalizadorLexico;
 
-public class LexicalError extends AnalysisError
-{
-    public LexicalError(String msg, int position)
-	 {
+public class LexicalError extends AnalysisError {
+
+    private String element;
+
+    public LexicalError(String msg, String element, int position) {
         super(msg, position);
+        this.element = element;
     }
 
-    public LexicalError(String msg)
-    {
+    public LexicalError(String msg) {
         super(msg);
+    }
+
+    public String getElement() {
+        return element;
     }
 }

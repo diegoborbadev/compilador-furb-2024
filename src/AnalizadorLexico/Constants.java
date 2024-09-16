@@ -1,9 +1,8 @@
 package AnalizadorLexico;
 
-public interface Constants extends ScannerConstants
-{
-    int EPSILON  = 0;
-    int DOLLAR   = 1;
+public interface Constants extends ScannerConstants {
+    int EPSILON = 0;
+    int DOLLAR = 1;
 
     int t_palavra_reservada = 2;
     int t_main = 3;
@@ -39,5 +38,4 @@ public interface Constants extends ScannerConstants
     int t_TOKEN_33 = 33; //"="
     int t_TOKEN_34 = 34; //"("
     int t_TOKEN_35 = 35; //")"
-
 }
