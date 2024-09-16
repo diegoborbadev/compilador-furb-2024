@@ -364,6 +364,7 @@ public class interfac extends javax.swing.JFrame {
                 Token t;
                 while ((t = lexico.nextToken()) != null) {
                     int linha = getLinhaByLexeme(t.getLexeme());
+                    if (t.getId() == 2) throw new LexicalError("palavra reservada inválida", t.getPosition());
                     tabela.adicionarToken(linha, classesId(t.getId()), t.getLexeme());
                 }
                 jTextArea2.setText(tabela.gerarTabela());
@@ -410,11 +411,6 @@ public class interfac extends javax.swing.JFrame {
 
     private String classesId(Integer id) {
         switch (id) {
-            case 2:
-                //jTextArea2.setText( lexema + "palavra reservada inválida");
-                return "palavra reservada inválida";   
-                //LexicalError(linha+"palavra reservada inválida error");  // retornar erro
-                
             case 16:
                 return "identificador";
             case 17:
