@@ -1,6 +1,7 @@
 package AnalizadorLexico;
+import AnalizadorLexico.ParserConstants;
 
-public interface Constants extends ScannerConstants {
+public interface Constants extends ScannerConstants, ParserConstants {
     int EPSILON = 0;
     int DOLLAR = 1;
 

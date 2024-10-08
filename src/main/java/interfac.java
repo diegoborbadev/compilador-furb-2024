@@ -1,5 +1,7 @@
 package main.java;
 
+import AnalizadorLexico.Sintatico;
+import AnalizadorLexico.Semantico;
 import AnalizadorLexico.LexicalError;
 import AnalizadorLexico.Lexico;
 import AnalizadorLexico.Token;
@@ -362,30 +364,47 @@ public class interfac extends JFrame {
     private static final List<String> verboseErrors = List.of("símbolo inválido", "palavra reservada inválida", "identificador inválido");
 
     private void jMenuCompilarMouseClicked(MouseEvent evt) {//GEN-FIRST:event_jMenuCompilarMouseClicked
+
         Lexico lexico = new Lexico();
+        Sintatico sintatico = new Sintatico();
+        Semantico semantico = new Semantico();
         lexico.setInput(getTextoEditor());
         try {
-            try {
-                TabelaTokens tabela = new TabelaTokens();
-                Token t;
-                while ((t = lexico.nextToken()) != null) {
-                    int linha = getLinhaByLexeme(t.getLexeme());
-                    if (t.getId() == 2) throw new LexicalError(verboseErrors.get(1), t.getLexeme(), t.getPosition());
-                    tabela.adicionarToken(linha, classesId(t.getId()), t.getLexeme());
-                }
-                jTextArea2.setText(tabela.gerarTabela());
-            } catch (LexicalError e) {
-                StringBuilder erro = new StringBuilder();
-                int linha = getLinhaByIndex(e.getPosition());
-                erro.append("linha ").append(linha).append(": ");
-                if (verboseErrors.contains(e.getMessage())) erro.append(e.getElement()).append(" ");
-                erro.append(e.getMessage());
-                jTextArea2.setText(erro.toString());
-            }
-        } catch (BadLocationException e) {
-            jTextArea2.setText("Erro ao determinar a linha: " + e.getMessage());
-        }
+            sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
 
+            // codigo feito antes
+            TabelaTokens tabela = new TabelaTokens();
+            Token t;
+            while ((t = lexico.nextToken()) != null) {
+                int linha = getLinhaByLexeme(t.getLexeme());
+                if (t.getId() == 2) {
+                    throw new LexicalError(verboseErrors.get(1), t.getLexeme(), t.getPosition());
+                }
+                tabela.adicionarToken(linha, classesId(t.getId()), t.getLexeme());
+            }
+            jTextArea2.setText(tabela.gerarTabela());
+            
+        } // mensagem: programa compilado com sucesso - área reservada para mensagens
+        catch (LexicalError e) {
+            StringBuilder erro = new StringBuilder();
+            int linha = getLinhaByIndex(e.getPosition());
+            erro.append("linha ").append(linha).append(": ");
+            if (verboseErrors.contains(e.getMessage())) {
+                erro.append(e.getElement()).append(" ");
+            }
+            erro.append(e.getMessage());
+            jTextArea2.setText(erro.toString());
+        } catch (SyntaticError e) {
+            System.out.println(e.getPosition() + " símbolo encontrado: na entrada " + e.getMessage());
+
+            //Trata erros sintáticos
+            //linha 			      sugestão: converter getPosition em linha
+            //símbolo encontrado    sugestão: implementar um método getToken no sintatico
+            //símbolos esperados,   alterar ParserConstants.java, String[] PARSER_ERROR
+            // consultar os símbolos esperados no GALS (em Documentação > Tabela de Análise Sintática): 		
+        } catch (SemanticError e) {
+            //Trata erros semânticos
+        }
 
     }//GEN-LAST:event_jMenuCompilarMouseClicked
 
