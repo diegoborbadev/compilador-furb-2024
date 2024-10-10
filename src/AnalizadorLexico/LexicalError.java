@@ -16,4 +16,10 @@ public class LexicalError extends AnalysisError {
     public String getElement() {
         return element;
     }
+    
+    // do novo Lexical Error
+    public LexicalError(String msg, int position)
+	 {
+        super(msg, position);
+    }
 }
