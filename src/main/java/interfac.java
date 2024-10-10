@@ -4,6 +4,8 @@ import AnalizadorLexico.Sintatico;
 import AnalizadorLexico.Semantico;
 import AnalizadorLexico.LexicalError;
 import AnalizadorLexico.Lexico;
+import AnalizadorLexico.SemanticError;
+import AnalizadorLexico.SyntaticError;
 import AnalizadorLexico.Token;
 
 import javax.swing.*;
@@ -369,6 +371,7 @@ public class interfac extends JFrame {
         Sintatico sintatico = new Sintatico();
         Semantico semantico = new Semantico();
         lexico.setInput(getTextoEditor());
+
         try {
             sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
 
@@ -382,28 +385,57 @@ public class interfac extends JFrame {
                 }
                 tabela.adicionarToken(linha, classesId(t.getId()), t.getLexeme());
             }
-            jTextArea2.setText(tabela.gerarTabela());
-            
+            jTextArea2.setText("programa compilado com sucesso: " + tabela.gerarTabela());
+
         } // mensagem: programa compilado com sucesso - área reservada para mensagens
         catch (LexicalError e) {
             StringBuilder erro = new StringBuilder();
-            int linha = getLinhaByIndex(e.getPosition());
-            erro.append("linha ").append(linha).append(": ");
+            int linha;
+            try {
+                linha = getLinhaByIndex(e.getPosition());
+                erro.append("linha ").append(linha).append(": ");
+            } catch (BadLocationException ex) {
+                Logger.getLogger("Erro Bad Location Exception");
+            }
+
             if (verboseErrors.contains(e.getMessage())) {
                 erro.append(e.getElement()).append(" ");
             }
             erro.append(e.getMessage());
             jTextArea2.setText(erro.toString());
         } catch (SyntaticError e) {
-            System.out.println(e.getPosition() + " símbolo encontrado: na entrada " + e.getMessage());
+            //System.out.println(e.getPosition() + " símbolo encontrado: na entrada " + e.getMessage());
+            sintatico.setInput(getTextoEditor());
 
-            //Trata erros sintáticos
-            //linha 			      sugestão: converter getPosition em linha
-            //símbolo encontrado    sugestão: implementar um método getToken no sintatico
-            //símbolos esperados,   alterar ParserConstants.java, String[] PARSER_ERROR
-            // consultar os símbolos esperados no GALS (em Documentação > Tabela de Análise Sintática): 		
+            int linha;
+            try {
+                linha = getLinhaByIndex(e.getPosition());
+
+                Token t;
+                while ((t = sintatico.nextToken()) != null) {
+                    linha = getLinhaByLexeme(t.getLexeme());
+                    if (t.getId() == 2) {
+                        throw new SyntaticError(verboseErrors.get(1), t.getLexeme(), t.getPosition());
+                    }
+                }
+
+                jTextArea2.setText("Erro na linha " + linha + " - encontrado "  + e.getMessage());
+
+                //Trata erros sintáticos
+                //linha 			      sugestão: converter getPosition em linha
+                //símbolo encontrado    sugestão: implementar um método getToken no sintatico
+                //símbolos esperados,   alterar ParserConstants.java, String[] PARSER_ERROR
+                // consultar os símbolos esperados no GALS (em Documentação > Tabela de Análise Sintática): 		
+            } catch (BadLocationException ex) {
+                Logger.getLogger(interfac.class.getName()).log(Level.SEVERE, null, ex + "erro 1");
+            } catch (SyntaticError ex) {
+                Logger.getLogger(interfac.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         } catch (SemanticError e) {
-            //Trata erros semânticos
+            //Trata erros semânticos      
+        } catch (BadLocationException ex) {
+            Logger.getLogger(interfac.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jMenuCompilarMouseClicked
