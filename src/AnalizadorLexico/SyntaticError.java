@@ -16,4 +16,8 @@ public class SyntaticError extends AnalysisError {
     public SyntaticError(String msg) {
         super(msg);
     }
+
+    public String getElement() {
+        return element;
+    }
 }
