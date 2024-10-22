@@ -1,10 +1,6 @@
 package main.java;
 
-import AnalizadorLexico.Sintatico;
-import AnalizadorLexico.Semantico;
-import AnalizadorLexico.LexicalError;
-import AnalizadorLexico.Lexico;
-import AnalizadorLexico.Token;
+import AnalizadorLexico.*;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -369,44 +365,52 @@ public class interfac extends JFrame {
         Sintatico sintatico = new Sintatico();
         Semantico semantico = new Semantico();
         lexico.setInput(getTextoEditor());
-        try {
-            sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
 
-            // codigo feito antes
-            TabelaTokens tabela = new TabelaTokens();
-            Token t;
-            while ((t = lexico.nextToken()) != null) {
-                int linha = getLinhaByLexeme(t.getLexeme());
-                if (t.getId() == 2) {
-                    throw new LexicalError(verboseErrors.get(1), t.getLexeme(), t.getPosition());
+        try {
+            if(!getTextoEditor().isEmpty()) {
+                sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
+
+                // codigo feito antes
+                Token t;
+                while ((t = lexico.nextToken()) != null) {
+                    if (t.getId() == 2) {
+                        throw new LexicalError(verboseErrors.get(1), t.getLexeme(), t.getPosition());
+                    }
                 }
-                tabela.adicionarToken(linha, classesId(t.getId()), t.getLexeme());
             }
-            jTextArea2.setText(tabela.gerarTabela());
-            
+            jTextArea2.setText("programa compilado com sucesso");
+
         } // mensagem: programa compilado com sucesso - área reservada para mensagens
         catch (LexicalError e) {
-            StringBuilder erro = new StringBuilder();
-            int linha = getLinhaByIndex(e.getPosition());
-            erro.append("linha ").append(linha).append(": ");
+            StringBuilder erro = getMensagemErroPadrao(e);
             if (verboseErrors.contains(e.getMessage())) {
                 erro.append(e.getElement()).append(" ");
             }
             erro.append(e.getMessage());
             jTextArea2.setText(erro.toString());
         } catch (SyntaticError e) {
-            System.out.println(e.getPosition() + " símbolo encontrado: na entrada " + e.getMessage());
-
-            //Trata erros sintáticos
-            //linha 			      sugestão: converter getPosition em linha
-            //símbolo encontrado    sugestão: implementar um método getToken no sintatico
-            //símbolos esperados,   alterar ParserConstants.java, String[] PARSER_ERROR
-            // consultar os símbolos esperados no GALS (em Documentação > Tabela de Análise Sintática): 		
+            StringBuilder erro = getMensagemErroPadrao(e);
+            int lenghtErroBase = erro.length();
+            erro.append("encontrado ").append(e.getElement()).append("\n");
+            erro.append(" ".repeat(lenghtErroBase)).append(e.getMessage());
+            jTextArea2.setText(erro.toString());
         } catch (SemanticError e) {
-            //Trata erros semânticos
+            //Trata erros semânticos      
         }
 
     }//GEN-LAST:event_jMenuCompilarMouseClicked
+
+    private StringBuilder getMensagemErroPadrao(AnalysisError e) {
+        StringBuilder erro = new StringBuilder("Erro na linha ");
+        int linha;
+        try {
+            linha = getLinhaByIndex(e.getPosition());
+            erro.append(linha).append(" - ");
+        } catch (BadLocationException ex) {
+            Logger.getLogger("Erro Bad Location Exception");
+        }
+        return erro;
+    }
 
     private String getTextoEditor() {
         return jTextArea3.getText();
