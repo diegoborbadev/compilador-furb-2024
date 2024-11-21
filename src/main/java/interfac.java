@@ -17,8 +17,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static AnalizadorLexico.ParserConstants.PARSER_ERROR;
-
 public class interfac extends JFrame {
 
     private File currentFile;
