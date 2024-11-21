@@ -392,20 +392,13 @@ public class interfac extends JFrame {
             StringBuilder erro = getMensagemErroPadrao(e);
             // Se o id for 2 -> é palavra reservada
             boolean isPalavraReservada = e.getTokenId() == 2;
-            // boolean isNaoTerminal = e.getErrorId() == 36;
-            boolean isNaoTerminal = false;
-            if(isPalavraReservada && !isNaoTerminal) {
+            if(isPalavraReservada) {
                 erro.append(e.getElement()).append(" palavra reservada inválida");
             } else {
                 String encontrado;
                 String esperado;
-                if(isNaoTerminal) {
-                    encontrado = e.getElement();
-                    esperado = "esperado expressao";
-                } else {
-                    encontrado = classesId(e.getTokenId());
-                    esperado = e.getMessage();
-                }
+                encontrado = classesId(e.getTokenId());
+                esperado = e.getMessage();
                 int lenghtErroBase = erro.length();
                 erro.append("encontrado ").append(encontrado).append("\n");
                 erro.append(" ".repeat(lenghtErroBase)).append(esperado);
