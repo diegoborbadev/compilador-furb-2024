@@ -17,8 +17,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static AnalizadorLexico.ParserConstants.PARSER_ERROR;
-
 public class interfac extends JFrame {
 
     private File currentFile;
@@ -394,7 +392,8 @@ public class interfac extends JFrame {
             StringBuilder erro = getMensagemErroPadrao(e);
             // Se o id for 2 -> é palavra reservada
             boolean isPalavraReservada = e.getTokenId() == 2;
-            boolean isNaoTerminal = e.getErrorId() >= 36;
+            // boolean isNaoTerminal = e.getErrorId() == 36;
+            boolean isNaoTerminal = false;
             if(isPalavraReservada && !isNaoTerminal) {
                 erro.append(e.getElement()).append(" palavra reservada inválida");
             } else {
