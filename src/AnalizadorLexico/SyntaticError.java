@@ -1,23 +1,31 @@
 package AnalizadorLexico;
 
 public class SyntaticError extends AnalysisError {
-    
-    private String element;
-    
-    public SyntaticError(String msg, String element, int position) {
+
+    private final int tokenId;
+    private final int errorId;
+    private final String element;
+
+    public SyntaticError(String msg, int errorId, Token token) {
+        this(msg, errorId, token.getId(), token.getLexeme(), token.getPosition());
+    }
+
+    public SyntaticError(String msg, int errorId, int tokenId, String element, int position) {
         super(msg, position);
+        this.errorId = errorId;
         this.element = element;
+        this.tokenId = tokenId;
     }
     
-    public SyntaticError(String msg, int position) {
-        super(msg, position);
-    }
-
-    public SyntaticError(String msg) {
-        super(msg);
-    }
-
     public String getElement() {
         return element;
+    }
+
+    public int getTokenId() {
+        return tokenId;
+    }
+
+    public int getErrorId() {
+        return errorId;
     }
 }

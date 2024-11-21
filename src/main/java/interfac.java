@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static AnalizadorLexico.ParserConstants.PARSER_ERROR;
+
 public class interfac extends JFrame {
 
     private File currentFile;
@@ -366,12 +368,12 @@ public class interfac extends JFrame {
         Semantico semantico = new Semantico();
         lexico.setInput(getTextoEditor());
 
+        Token t = null;
         try {
             if(!getTextoEditor().isEmpty()) {
                 sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
 
                 // codigo feito antes
-                Token t;
                 while ((t = lexico.nextToken()) != null) {
                     if (t.getId() == 2) {
                         throw new LexicalError(verboseErrors.get(1), t.getLexeme(), t.getPosition());
@@ -390,9 +392,25 @@ public class interfac extends JFrame {
             jTextArea2.setText(erro.toString());
         } catch (SyntaticError e) {
             StringBuilder erro = getMensagemErroPadrao(e);
-            int lenghtErroBase = erro.length();
-            erro.append("encontrado ").append(e.getElement()).append("\n");
-            erro.append(" ".repeat(lenghtErroBase)).append(e.getMessage());
+            // Se o id for 2 -> é palavra reservada
+            boolean isPalavraReservada = e.getTokenId() == 2;
+            boolean isNaoTerminal = e.getErrorId() >= 36;
+            if(isPalavraReservada && !isNaoTerminal) {
+                erro.append(e.getElement()).append(" palavra reservada inválida");
+            } else {
+                String encontrado;
+                String esperado;
+                if(isNaoTerminal) {
+                    encontrado = e.getElement();
+                    esperado = "esperado expressao";
+                } else {
+                    encontrado = classesId(e.getTokenId());
+                    esperado = e.getMessage();
+                }
+                int lenghtErroBase = erro.length();
+                erro.append("encontrado ").append(encontrado).append("\n");
+                erro.append(" ".repeat(lenghtErroBase)).append(esperado);
+            }
             jTextArea2.setText(erro.toString());
         } catch (SemanticError e) {
             //Trata erros semânticos      
@@ -427,6 +445,8 @@ public class interfac extends JFrame {
 
     private String classesId(Integer id) {
         switch (id) {
+            case 1:
+                return "EOF";
             case 16:
                 return "identificador";
             case 17:

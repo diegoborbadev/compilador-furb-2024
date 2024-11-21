@@ -63,7 +63,7 @@ public class Sintatico implements Constants
             }
             else
             {
-                throw new SyntaticError(PARSER_ERROR[x], currentToken.getLexeme(), currentToken.getPosition());
+                throw new SyntaticError(PARSER_ERROR[x], x, currentToken);
             }
         }
         else if (isNonTerminal(x))
@@ -71,7 +71,7 @@ public class Sintatico implements Constants
             if (pushProduction(x, a))
                 return false;
             else
-                throw new SyntaticError(PARSER_ERROR[x], currentToken.getLexeme(), currentToken.getPosition());
+                throw new SyntaticError(PARSER_ERROR[x], x, currentToken);
         }
         else // isSemanticAction(x)
         {
@@ -89,7 +89,7 @@ public class Sintatico implements Constants
             //empilha a produção em ordem reversa
             for (int i=production.length-1; i>=0; i--)
             {
-                stack.push(new Integer(production[i]));
+                stack.push(production[i]);
             }
             return true;
         }
@@ -103,8 +103,8 @@ public class Sintatico implements Constants
         this.semanticAnalyser = semanticAnalyser;
 
         stack.clear();
-        stack.push(new Integer(DOLLAR));
-        stack.push(new Integer(START_SYMBOL));
+        stack.push(DOLLAR);
+        stack.push(START_SYMBOL);
 
         currentToken = scanner.nextToken();
 
@@ -164,7 +164,7 @@ public class Sintatico implements Constants
 
         if (endState < 0 || (endState != state && tokenForState(lastState) == -2)) {
             String element = this.getInput().substring(start, position);
-            throw new SyntaticError(SCANNER_ERROR[lastState], element, start);
+            throw new SyntaticError(SCANNER_ERROR[lastState], lastState, 0, element, start);
         }
 
         position = end;
