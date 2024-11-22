@@ -398,6 +398,7 @@ public class interfac extends JFrame {
                 String encontrado;
                 String esperado;
                 encontrado = classesId(e.getTokenId());
+                if(encontrado.isEmpty()) encontrado = e.getElement();
                 esperado = e.getMessage();
                 int lenghtErroBase = erro.length();
                 erro.append("encontrado ").append(encontrado).append("\n");
@@ -451,9 +452,9 @@ public class interfac extends JFrame {
                 if (id >= 3 && id <= 15) {
                     return "palavra reservada";
                 }
-                if (id >= 20 && id <= 35) {
-                    return "símbolo especial";
-                }
+//                if (id >= 20 && id <= 35) {
+//                    return "símbolo especial";
+//                }
                 return "";
         }
     }
