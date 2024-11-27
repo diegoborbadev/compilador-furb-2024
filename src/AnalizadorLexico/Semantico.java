@@ -63,7 +63,7 @@ public class Semantico implements Constants {  // implements Constants
             case 102:
                 acaoSemantica102(token); // lançar erro
             case 103:
-                acaoSemantica103(token);
+                acaoSemantica103(token); // lançar erro
             case 106:
                 acaoSemantica106(token);
             case 105:
@@ -308,9 +308,10 @@ public class Semantico implements Constants {  // implements Constants
                     default:
                         break;
                 }
-                listaIdentificadores.clear();
+                
             }
         }
+        listaIdentificadores.clear();
         // se não encontrar no for
         // encerrar a execução e apontar erro semântico, 
         //indicando a linha e apresentando a token.getLexeme já declarado (por exemplo: i_area já declarado);
@@ -385,7 +386,6 @@ public class Semantico implements Constants {  // implements Constants
     }
 
     private void acaoSemantica110(Token token) {
-        //contRotuloDesempilhado
         String rot2 = pilhaRotulos.pop();
         String rot1 = pilhaRotulos.pop();
         codigo.add("br " + rot1);
@@ -408,7 +408,7 @@ public class Semantico implements Constants {  // implements Constants
     }
 
     private void acaoSemantica113(Token token) { // antes do repeat
-        codigo.add("novo_rotulo" + contRotulo);
+        codigo.add("novo_rotulo" + contRotulo+":");
         pilhaRotulos.add("novo_rotulo" + contRotulo);
         contRotulo++;
     }
@@ -420,7 +420,7 @@ public class Semantico implements Constants {  // implements Constants
 
     private void acaoSemantica115(Token token) {
         String rot = pilhaRotulos.pop();
-        codigo.add(": brfalse " + rot);
+        codigo.add("brfalse " + rot);
     }
 
 }
