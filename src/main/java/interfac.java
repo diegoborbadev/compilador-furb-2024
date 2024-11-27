@@ -366,12 +366,12 @@ public class interfac extends JFrame {
         Semantico semantico = new Semantico();
         lexico.setInput(getTextoEditor());
 
+        Token t = null;
         try {
             if(!getTextoEditor().isEmpty()) {
                 sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
 
                 // codigo feito antes
-                Token t;
                 while ((t = lexico.nextToken()) != null) {
                     if (t.getId() == 2) {
                         throw new LexicalError(verboseErrors.get(1), t.getLexeme(), t.getPosition());
@@ -390,9 +390,20 @@ public class interfac extends JFrame {
             jTextArea2.setText(erro.toString());
         } catch (SyntaticError e) {
             StringBuilder erro = getMensagemErroPadrao(e);
-            int lenghtErroBase = erro.length();
-            erro.append("encontrado ").append(e.getElement()).append("\n");
-            erro.append(" ".repeat(lenghtErroBase)).append(e.getMessage());
+            // Se o id for 2 -> é palavra reservada
+            boolean isPalavraReservada = e.getTokenId() == 2;
+            if(isPalavraReservada) {
+                erro.append(e.getElement()).append(" palavra reservada inválida");
+            } else {
+                String encontrado;
+                String esperado;
+                encontrado = classesId(e.getTokenId());
+                if(encontrado.isEmpty()) encontrado = e.getElement();
+                esperado = e.getMessage();
+                int lenghtErroBase = erro.length();
+                erro.append("encontrado ").append(encontrado).append("\n");
+                erro.append(" ".repeat(lenghtErroBase)).append(esperado);
+            }
             jTextArea2.setText(erro.toString());
         } catch (SemanticError e) {
             //Trata erros semânticos      
@@ -427,6 +438,8 @@ public class interfac extends JFrame {
 
     private String classesId(Integer id) {
         switch (id) {
+            case 1:
+                return "EOF";
             case 16:
                 return "identificador";
             case 17:
@@ -439,9 +452,9 @@ public class interfac extends JFrame {
                 if (id >= 3 && id <= 15) {
                     return "palavra reservada";
                 }
-                if (id >= 20 && id <= 35) {
-                    return "símbolo especial";
-                }
+//                if (id >= 20 && id <= 35) {
+//                    return "símbolo especial";
+//                }
                 return "";
         }
     }

@@ -1,7 +1,8 @@
 package AnalizadorLexico;
 
 public class AnalysisError extends Exception {
-    private int position;
+
+    private final int position;
 
     public AnalysisError(String msg, int position) {
         super(msg);
