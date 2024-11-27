@@ -1,6 +1,7 @@
 package AnalizadorLexico;
 
 public interface ParserConstants {
+
     int START_SYMBOL = 36;
 
     int FIRST_NON_TERMINAL = 36;
