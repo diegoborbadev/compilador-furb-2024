@@ -10,6 +10,9 @@ public class Semantico  {  // implements Constants
     List<String> codigo = new ArrayList<>();
     Stack<String> pilhaTipos;
     String operador_relacional= "";
+    Stack<String> pilhaRotulos;
+    List<String> listaIdentificadores = new ArrayList<>();
+    List<String> tabelaSimbolos = new ArrayList<>();
 
     public void executeAction(int action, Token token) throws SemanticError {
         System.out.println("Ação #" + action + ", Token: " + token);
@@ -47,9 +50,37 @@ public class Semantico  {  // implements Constants
             case 120:
                 acaoSemantica120(token);
             case 116:
-                acaoSemantica116(token);
+                acaoSemantica116(token); // fazer
             case 117:
                 acaoSemantica117(token);
+            case 127:
+                acaoSemantica127(token); // lançar erro
+            case 107:
+                acaoSemantica107(token); // fazer
+            case 104:
+                acaoSemantica104(token);
+            case 102:
+                acaoSemantica102(token); // lançar erro
+            case 103:
+                acaoSemantica103(token);
+            case 106:
+                acaoSemantica106(token);
+            case 105:
+                acaoSemantica105(token);
+            case 109:
+                acaoSemantica109(token);
+            case 110:
+                acaoSemantica110(token);
+            case 111:
+                acaoSemantica111(token);
+            case 112:
+                acaoSemantica112(token);
+            case 113:
+                acaoSemantica113(token);
+            case 114:
+                acaoSemantica114(token);
+            case 115:
+                acaoSemantica115(token);
             default:
                 System.out.println("Ação ainda não implementada");
         }
@@ -176,10 +207,29 @@ public class Semantico  {  // implements Constants
     private void acaoSemantica122(Token token) {  // efetuar ação do operador relacional
         String valor1 = codigo.get(codigo.size()-1);
         String valor2 = codigo.get(codigo.size()-2);
+        String tipo1 = pilhaTipos.pop(); // tiro esses 2 valores ?
+        String tipo2 = pilhaTipos.pop();
         String operador = operador_relacional;
         if(operador == "ceq"){
+            codigo.add("ceq");
             if(valor1 == valor2){
-                pilhaTipos.add("true");
+                pilhaTipos.add("true"); 
+            }else{
+                pilhaTipos.add("false");
+            }
+        }else if(operador == "cgt"){
+            codigo.add("cgt");
+            if(Float.parseFloat(valor2) > Float.parseFloat(valor1)){
+                pilhaTipos.add("true"); 
+            }else{
+                pilhaTipos.add("false");
+            }
+        }else if(operador == "clt"){
+            codigo.add("clt");
+            if(Float.parseFloat(valor2) < Float.parseFloat(valor1)){
+                pilhaTipos.add("true"); 
+            }else{
+                pilhaTipos.add("false");
             }
         }
     }
@@ -187,6 +237,81 @@ public class Semantico  {  // implements Constants
     private void acaoSemantica120(Token token) { // operador lógico unário "!"
         codigo.add("ldc.i4.1");
         codigo.add("xor");
+    }
+
+    private void acaoSemantica116(Token token) { // && ou ||
+        String tipo1 = pilhaTipos.pop();
+        String tipo2 = pilhaTipos.pop();
+        
+    }
+
+    private void acaoSemantica127(Token token) {
+        for(int i=0;i<=tabelaSimbolos.size(); i++){
+            if(tabelaSimbolos.get(i).equals(token.getLexeme())){
+                char tipoToken = token.getLexeme().charAt(0);
+                switch (tipoToken) {
+                    case 'i':
+                        pilhaTipos.add("int64");
+                        codigo.add(" ldloc "+ token.getLexeme());
+                        codigo.add("conv.r8");
+                        break;
+                    case 'f':
+                        pilhaTipos.add("float64");
+                        codigo.add(" ldloc "+ token.getLexeme());
+                        break;
+                    case 'b':
+                        pilhaTipos.add("bool");
+                        codigo.add(" ldloc "+ token.getLexeme());
+                        break;
+                    case 's':
+                        pilhaTipos.add("string");
+                        codigo.add(" ldloc "+ token.getLexeme());
+                        break;
+                    default:
+                        break;
+                }
+            }else{
+                // encerrar a execução e apontar erro semântico, 
+                //indicando a linha e apresentando a mensagem token.getLexeme não declarado 
+            }
+        }
+    }
+
+    private void acaoSemantica107(Token token) { // quebra de linha
+        
+    }
+
+    private void acaoSemantica104(Token token) {
+        listaIdentificadores.add(token.getLexeme());
+    }
+
+    private void acaoSemantica102(Token token) {
+        for(int i=0;i<=tabelaSimbolos.size(); i++){
+            if(!tabelaSimbolos.get(i).equals(token.getLexeme())){
+                tabelaSimbolos.add(token.getLexeme());
+                char tipoToken = token.getLexeme().charAt(0);
+                switch (tipoToken) {
+                    case 'i':
+                        codigo.add(" .locals(int64) ");
+                        break;
+                    case 'f':
+                        codigo.add(" .locals(float64) ");
+                        break;
+                    case 'b':
+                        codigo.add(" .locals(bool) ");
+                        break;
+                    case 's':
+                        codigo.add(" .locals(string) ");
+                        break;
+                    default:
+                        break;
+                }
+                listaIdentificadores.clear();
+            }else{
+                // encerrar a execução e apontar erro semântico, 
+                //indicando a linha e apresentando a token.getLexeme já declarado (por exemplo: i_area já declarado);
+            }
+        }
     }
 
    
