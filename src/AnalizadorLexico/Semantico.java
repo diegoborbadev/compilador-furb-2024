@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class Semantico {  // implements Constants
+public class Semantico implements Constants {  // implements Constants
 
     // declarar os registros semanticos como atributos do analisador semantico
     List<String> codigo = new ArrayList<>();
@@ -47,17 +47,17 @@ public class Semantico {  // implements Constants
             case 121:
                 acaoSemantica121(token);
             case 122:
-                acaoSemantica122(token);   // fazer o codigo
+                acaoSemantica122(token);   // ver se a logica esta correta
             case 120:
                 acaoSemantica120(token);
             case 116:
-                acaoSemantica116(token); // fazer logica
+                acaoSemantica116(token); 
             case 117:
-                acaoSemantica117(token); // fazer logica
+                acaoSemantica117(token); 
             case 127:
                 acaoSemantica127(token); // lançar erro
             case 107:
-                acaoSemantica107(token); // fazer
+                acaoSemantica107(token); // quebra de linha, ver como vamos implementar isso
             case 104:
                 acaoSemantica104(token);
             case 102:
@@ -86,19 +86,23 @@ public class Semantico {  // implements Constants
                 System.out.println("Ação ainda não implementada");
         }
 
-        /*
-        
-        codigo.add("conv.r8");
-        codigo.add("{int64}");
-         */
-        // no final do il tem um conv.r8 e depois parenteses com int64 
-        // que converte o resultado para int64, se for bool ou outro não tem o conv.r8
-        // e o item dentro do parenteses vai ser bool por exemplo
-    }
-
-    private void acaoSemantica11() {
-        pilhaTipos.push("bool");
-        codigo.add("ldc.i4.1");
+        switch (pilhaTipos.pop()) {
+            case "int64":
+                codigo.add("conv.r8");
+                codigo.add("call void [mscorlib]System.Console::WriteLine(int64)");
+                break;
+            case "float64":
+                codigo.add("call void [mscorlib]System.Console::WriteLine(float64)");
+                break;
+            case "bool":
+                codigo.add("call void [mscorlib]System.Console::WriteLine(bool)");
+                break;
+            case "string":
+                codigo.add("call void [mscorlib]System.Console::WriteLine(string)");
+                break;
+            default:
+                break;
+        }
     }
 
     private void acaoSemantica100() {  // cabeçalho
@@ -127,7 +131,7 @@ public class Semantico {  // implements Constants
         String tipo1 = pilhaTipos.pop();
 
         codigo.add("conv.r8");
-        codigo.add("call void\n" + "[mscorlib]System.Console::Write(" + tipo1 + ")");
+        codigo.add("call void [mscorlib]System.Console::Write(" + tipo1 + ")");
     }
 
     private void acaoSemantica123() { // soma
@@ -166,8 +170,8 @@ public class Semantico {  // implements Constants
         pilhaTipos.add("bool");
         codigo.add("ldc.i4.0");
     }
-    
-    private void acaoSemantica131(Token token) {
+
+    private void acaoSemantica131(Token token) {  // negação
         codigo.add("ldc.i4.1");
         codigo.add("xor");
     }
@@ -183,24 +187,24 @@ public class Semantico {  // implements Constants
         codigo.add("sub");
     }
 
-    private void acaoSemantica125() {
+    private void acaoSemantica125() { // multiplicação
         String tipo1 = pilhaTipos.pop();
         String tipo2 = pilhaTipos.pop();
         if (tipo1 == "int64" && tipo2 == "int64") {
-            pilhaTipos.add("int64");
+            pilhaTipos.push("int64");
         } else {
-            pilhaTipos.add("float64");
+            pilhaTipos.push("float64");
         }
         codigo.add("mul");
     }
 
-    private void acaoSemantica126() {
+    private void acaoSemantica126() {   // divisão
         String tipo1 = pilhaTipos.pop();
         String tipo2 = pilhaTipos.pop();
-        if (tipo1 == "int64" && tipo2 == "int64") {
-            pilhaTipos.add("int64");
+        if (tipo1.equals("int64") && tipo2.equals("int64")) {
+            pilhaTipos.push("int64");
         } else {
-            pilhaTipos.add("float64");
+            pilhaTipos.push("float64");
         }
         codigo.add("div");
     }
@@ -210,32 +214,18 @@ public class Semantico {  // implements Constants
     }
 
     private void acaoSemantica122(Token token) {  // efetuar ação do operador relacional
-        String valor1 = codigo.get(codigo.size() - 1);
-        String valor2 = codigo.get(codigo.size() - 2);
-        String tipo1 = pilhaTipos.pop(); // tiro esses 2 valores ?
+        String tipo1 = pilhaTipos.pop(); 
         String tipo2 = pilhaTipos.pop();
         String operador = operador_relacional;
+        
+        pilhaTipos.push("bool");
+        
         if (operador == "ceq") {
             codigo.add("ceq");
-            if (valor1 == valor2) {
-                pilhaTipos.add("true");
-            } else {
-                pilhaTipos.add("false");
-            }
         } else if (operador == "cgt") {
             codigo.add("cgt");
-            if (Float.parseFloat(valor2) > Float.parseFloat(valor1)) {
-                pilhaTipos.add("true");
-            } else {
-                pilhaTipos.add("false");
-            }
         } else if (operador == "clt") {
             codigo.add("clt");
-            if (Float.parseFloat(valor2) < Float.parseFloat(valor1)) {
-                pilhaTipos.add("true");
-            } else {
-                pilhaTipos.add("false");
-            }
         }
     }
 
@@ -248,14 +238,14 @@ public class Semantico {  // implements Constants
         String tipo1 = pilhaTipos.pop();
         String tipo2 = pilhaTipos.pop();
         codigo.add("and");
-        pilhaTipos.add("bool"); 
+        pilhaTipos.add("bool");
     }
-    
+
     private void acaoSemantica117(Token token) {
         String tipo1 = pilhaTipos.pop();
         String tipo2 = pilhaTipos.pop();
         codigo.add("or");
-        pilhaTipos.add("bool"); 
+        pilhaTipos.add("bool");
     }
 
     private void acaoSemantica127(Token token) {
@@ -283,15 +273,14 @@ public class Semantico {  // implements Constants
                     default:
                         break;
                 }
-            } 
+            }
         }
         // encerrar a execução e apontar erro semântico, 
         //indicando a linha e apresentando a mensagem token.getLexeme não declarado 
-            
     }
 
     private void acaoSemantica107(Token token) { // quebra de linha
-
+        codigo.add("\n");
     }
 
     private void acaoSemantica104(Token token) {
@@ -320,12 +309,12 @@ public class Semantico {  // implements Constants
                         break;
                 }
                 listaIdentificadores.clear();
-            } 
+            }
         }
         // se não encontrar no for
         // encerrar a execução e apontar erro semântico, 
-                //indicando a linha e apresentando a token.getLexeme já declarado (por exemplo: i_area já declarado);
-            
+        //indicando a linha e apresentando a token.getLexeme já declarado (por exemplo: i_area já declarado);
+
     }
 
     private void acaoSemantica103(Token token) {
@@ -337,19 +326,19 @@ public class Semantico {  // implements Constants
             codigo.add("dup");
             for (int i = 0; i <= tabelaSimbolos.size(); i++) {
                 if (tabelaSimbolos.get(i).equals(token.getLexeme())) {
-                    codigo.add("stloc "+ listaIdentificadores.get(j));
-                } 
+                    codigo.add("stloc " + listaIdentificadores.get(j));
+                }
             }
             // se não encontrar na tabela de simbolos
             // encerrar a execução e apontar erro semântico, 
-                //indicando a linha e apresentando a token.getLexeme não declarado (por exemplo: i_area não declarado);
+            //indicando a linha e apresentando a token.getLexeme não declarado (por exemplo: i_area não declarado);
         }
 
         listaIdentificadores.clear();
     }
 
     private void acaoSemantica106(Token token) {
-        codigo.add("ldstr "+ token.getLexeme());  // token.getLexeme() ??
+        codigo.add("ldstr " + token.getLexeme());  // token.getLexeme() ??
         codigo.add("call void [mscorlib]System.Console::Write(string)");
     }
 
@@ -361,81 +350,77 @@ public class Semantico {  // implements Constants
                     case 'i':
                         codigo.add("call string [mscorlib]System.Console::ReadLine()");
                         codigo.add("call int64 [mscorlib]System.Int64::Parse(string)");
-                        codigo.add("stloc "+token.getLexeme());
+                        codigo.add("stloc " + token.getLexeme());
                         break;
                     case 'f':
                         codigo.add("call string [mscorlib]System.Console::ReadLine()");
                         codigo.add("call float64 [mscorlib]System.Double::Parse(string)");
-                        codigo.add("stloc "+token.getLexeme());
+                        codigo.add("stloc " + token.getLexeme());
                         break;
                     case 'b':
                         codigo.add("call string [mscorlib]System.Console::ReadLine()");
                         codigo.add("call bool [mscorlib]System.Boolean::Parse(string)");
-                        codigo.add("stloc "+token.getLexeme());
+                        codigo.add("stloc " + token.getLexeme());
                         break;
                     case 's':
                         codigo.add("call string [mscorlib]System.Console::ReadLine()");
-                        codigo.add("stloc "+token.getLexeme());
+                        codigo.add("stloc " + token.getLexeme());
                         break;
                     default:
                         break;
                 }
-            } 
+            }
         }
         // encerrar a execução e apontar erro semântico, 
         //indicando a linha e apresentando a mensagem token.getLexeme não declarado 
-            
+
     }
 
     private void acaoSemantica109(Token token) {
-        pilhaRotulos.add("novo_rotulo"+contRotulo);
+        pilhaRotulos.add("novo_rotulo" + contRotulo);
         contRotulo++;
-        codigo.add("brfalse novo_rotulo"+contRotulo);
-        pilhaRotulos.add("novo_rotulo"+contRotulo);
+        codigo.add("brfalse novo_rotulo" + contRotulo);
+        pilhaRotulos.add("novo_rotulo" + contRotulo);
         contRotulo++;
     }
 
     private void acaoSemantica110(Token token) {
         //contRotuloDesempilhado
-        String rot2= pilhaRotulos.pop();
-        String rot1= pilhaRotulos.pop();
-        codigo.add( "br "+rot1);
+        String rot2 = pilhaRotulos.pop();
+        String rot1 = pilhaRotulos.pop();
+        codigo.add("br " + rot1);
         pilhaRotulos.add(rot1);
-        
+
         // rotular a próxima instrução do código objeto com o rótulo desempilhado (código: rotulo_desempilhado2:). 
-        codigo.add(rot2+":");
+        codigo.add(rot2 + ":");
     }
 
     private void acaoSemantica111(Token token) {
-        String rot= pilhaRotulos.pop();
+        String rot = pilhaRotulos.pop();
         //rotular a próxima instrução do código objeto com o rótulo desempilhado (código: rotulo_desempilhado:). 
-        codigo.add(rot+":");
+        codigo.add(rot + ":");
     }
 
     private void acaoSemantica112(Token token) {
-        codigo.add("brfalse novo_rotulo"+contRotulo);
-        pilhaRotulos.add("novo_rotulo"+contRotulo);
+        codigo.add("brfalse novo_rotulo" + contRotulo);
+        pilhaRotulos.add("novo_rotulo" + contRotulo);
         contRotulo++;
     }
 
     private void acaoSemantica113(Token token) { // antes do repeat
-        codigo.add("novo_rotulo"+contRotulo);
-        pilhaRotulos.add("novo_rotulo"+contRotulo);
+        codigo.add("novo_rotulo" + contRotulo);
+        pilhaRotulos.add("novo_rotulo" + contRotulo);
         contRotulo++;
     }
 
     private void acaoSemantica114(Token token) {
         String rot = pilhaRotulos.pop();
-        codigo.add("brtrue "+rot);
+        codigo.add("brtrue " + rot);
     }
 
     private void acaoSemantica115(Token token) {
         String rot = pilhaRotulos.pop();
-        codigo.add(": brfalse "+rot);
+        codigo.add(": brfalse " + rot);
     }
-
-    
-
-    
 
 }

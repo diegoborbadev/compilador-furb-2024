@@ -1,3 +1,5 @@
+package AnalizadorLexico;
+
 
 public interface Constants extends ScannerConstants, ParserConstants
 {
