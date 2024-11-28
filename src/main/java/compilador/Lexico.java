@@ -1,4 +1,8 @@
-package AnalizadorLexico;
+package main.java.compilador;
+
+import main.java.compilador.core.constants.Constants;
+import main.java.compilador.core.Token;
+import main.java.compilador.core.exceptions.LexicalError;
 
 public class Lexico implements Constants {
     private int position;

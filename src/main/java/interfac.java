@@ -1,6 +1,13 @@
 package main.java;
 
-import AnalizadorLexico.*;
+import main.java.compilador.Lexico;
+import main.java.compilador.Semantico;
+import main.java.compilador.Sintatico;
+import main.java.compilador.core.Token;
+import main.java.compilador.core.exceptions.AnalysisError;
+import main.java.compilador.core.exceptions.LexicalError;
+import main.java.compilador.core.exceptions.SemanticError;
+import main.java.compilador.core.exceptions.SyntaticError;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -360,7 +367,6 @@ public class interfac extends JFrame {
     private static final List<String> verboseErrors = List.of("símbolo inválido", "palavra reservada inválida", "identificador inválido");
 
     private void jMenuCompilarMouseClicked(MouseEvent evt) {//GEN-FIRST:event_jMenuCompilarMouseClicked
-
         Lexico lexico = new Lexico();
         Sintatico sintatico = new Sintatico();
         Semantico semantico = new Semantico();
@@ -368,7 +374,7 @@ public class interfac extends JFrame {
 
         Token t = null;
         try {
-            if(!getTextoEditor().isEmpty()) {
+            if (!getTextoEditor().isEmpty()) {
                 sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
 
                 // codigo feito antes
@@ -380,6 +386,7 @@ public class interfac extends JFrame {
             }
             jTextArea2.setText("programa compilado com sucesso");
 
+            salvarIl(semantico.getCodigo());
         } // mensagem: programa compilado com sucesso - área reservada para mensagens
         catch (LexicalError e) {
             StringBuilder erro = getMensagemErroPadrao(e);
@@ -392,13 +399,15 @@ public class interfac extends JFrame {
             StringBuilder erro = getMensagemErroPadrao(e);
             // Se o id for 2 -> é palavra reservada
             boolean isPalavraReservada = e.getTokenId() == 2;
-            if(isPalavraReservada) {
+            if (isPalavraReservada) {
                 erro.append(e.getElement()).append(" palavra reservada inválida");
             } else {
                 String encontrado;
                 String esperado;
                 encontrado = classesId(e.getTokenId());
-                if(encontrado.isEmpty()) encontrado = e.getElement();
+                if (encontrado.isEmpty()) {
+                    encontrado = e.getElement();
+                }
                 esperado = e.getMessage();
                 int lenghtErroBase = erro.length();
                 erro.append("encontrado ").append(encontrado).append("\n");
@@ -412,6 +421,23 @@ public class interfac extends JFrame {
         }
 
     }//GEN-LAST:event_jMenuCompilarMouseClicked
+
+    private void salvarIl(String cod) {
+        String absolutePath = currentFile.getAbsolutePath();
+
+        String pathWithoutExtension = absolutePath.replaceFirst("\\.txt$", "");
+
+        File file = new File(pathWithoutExtension + ".il");
+
+        // Gravar o conteúdo do StringBuilder no arquivo
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(cod);
+            System.out.println("Conteúdo gravado no arquivo com sucesso!");
+        } catch (IOException e) {
+            System.err.println("Erro ao gravar no arquivo: " + e.getMessage());
+        }
+    }
+
 
     private StringBuilder getMensagemErroPadrao(AnalysisError e) {
         StringBuilder erro = new StringBuilder("Erro na linha ");

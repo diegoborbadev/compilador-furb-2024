@@ -1,4 +1,4 @@
-package AnalizadorLexico;
+package main.java.compilador.core.constants;
 
 public interface ScannerConstants
 {

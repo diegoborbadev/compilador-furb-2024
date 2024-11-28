@@ -1,4 +1,4 @@
-package AnalizadorLexico;
+package main.java.compilador.core.exceptions;
 
 public class AnalysisError extends Exception {
 

@@ -1,4 +1,6 @@
-package AnalizadorLexico;
+package main.java.compilador.core.exceptions;
+
+import main.java.compilador.core.Token;
 
 public class SyntaticError extends AnalysisError {
 

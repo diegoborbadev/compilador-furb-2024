@@ -1,4 +1,10 @@
-package AnalizadorLexico;
+package main.java.compilador;
+
+import main.java.compilador.core.constants.Constants;
+import main.java.compilador.core.Token;
+import main.java.compilador.core.exceptions.LexicalError;
+import main.java.compilador.core.exceptions.SemanticError;
+import main.java.compilador.core.exceptions.SyntaticError;
 
 import java.util.Stack;
 
