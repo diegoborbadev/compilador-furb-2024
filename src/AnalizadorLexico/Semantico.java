@@ -12,17 +12,14 @@ public class Semantico implements Constants {
     private static final String BOOLEAN_TYPE = "bool";
     private static final String STRING_TYPE = "string";
 
-    private StringBuilder code;
-    private int labelCounter;
-    private String operadorRelacional;
-    private final Stack<String> typeStack = new Stack<>();
-    private final Stack<String> labelStack = new Stack<>();
-    private final List<Token> listaTokens = new ArrayList<>();
-    private final List<String> tabelaSimbolos = new ArrayList<>();
+    private StringBuilder codigo;
+    private int contadorLabel;
+    private String operador;
+    private final Stack<String> stackTipo = new Stack<>();
+    private final Stack<String> stackLabel = new Stack<>();
+    private final List<Token> tokens = new ArrayList<>();
+    private final List<String> simbolos = new ArrayList<>();
 
-    /**
-     * Executa as acoes recebidas de acordo com o codigo
-     */
     public void executeAction(int action, Token token) throws SemanticError {
         switch (action) {
             case 100 -> acaoSemantica100();
@@ -58,15 +55,14 @@ public class Semantico implements Constants {
             case 130 -> acaoSemantica130(token);
             case 131 -> acaoSemantica131();
         }
-
     }
 
     private void acaoSemantica102() throws SemanticError {
-        for (Token token : listaTokens) {
+        for (Token token : tokens) {
             final String id = token.getLexeme();
             final String type;
 
-            final Optional<String> simbol = tabelaSimbolos.stream()
+            final Optional<String> simbol = simbolos.stream()
                     .filter(v -> v.equals(id))
                     .findFirst();
 
@@ -74,7 +70,7 @@ public class Semantico implements Constants {
                 throw new SemanticError(id + " já declarado", token.getPosition());
             }
 
-            tabelaSimbolos.add(id);
+            simbolos.add(id);
 
             if (id.startsWith("i_")) {
                 type = INT_TYPE;
@@ -86,41 +82,41 @@ public class Semantico implements Constants {
                 type = BOOLEAN_TYPE;
             }
 
-            code.append(String.format(".locals (%s %s)", type, id))
+            codigo.append(String.format(".locals (%s %s)", type, id))
                     .append("\n");
         }
 
-        listaTokens.clear();
+        tokens.clear();
     }
 
     private void acaoSemantica103() throws SemanticError {
-        String expressionType = typeStack.pop();
+        String expressionType = stackTipo.pop();
         if (expressionType.equals(INT_TYPE)) {
-            code.append("conv.i8")
+            codigo.append("conv.i8")
                     .append("\n");
         }
-        for (Token token : listaTokens) {
+        for (Token token : tokens) {
             final String id = token.getLexeme();
-            boolean idDeclared = tabelaSimbolos.contains(id);
+            boolean idDeclared = simbolos.contains(id);
             if (!idDeclared) throw new SemanticError(id + " não declarado", token.getPosition());
-            code.append("stloc")
+            codigo.append("stloc")
                     .append(" ")
                     .append(id)
                     .append("\n");
         }
-        listaTokens.clear();
+        tokens.clear();
     }
 
     private void acaoSemantica104(Token token) {
-        this.listaTokens.add(token);
+        this.tokens.add(token);
     }
 
     private void acaoSemantica105(Token token) throws SemanticError {
         String id = token.getLexeme();
-        boolean isIdDeclared = tabelaSimbolos.contains(id);
+        boolean isIdDeclared = simbolos.contains(id);
         if (!isIdDeclared) throw new SemanticError(id + " não declarado", token.getPosition());
         if (id.startsWith("i_")) {
-            code.append("call string [mscorlib]System.Console::ReadLine()")
+            codigo.append("call string [mscorlib]System.Console::ReadLine()")
                     .append("\n")
                     .append("call int64 [mscorlib]System.Int64::Parse(string)")
                     .append("\n")
@@ -129,7 +125,7 @@ public class Semantico implements Constants {
                     .append(id);
         }
         if (id.startsWith("f_")) {
-            code.append("call string [mscorlib]System.Console::ReadLine()")
+            codigo.append("call string [mscorlib]System.Console::ReadLine()")
                     .append("\n")
                     .append("call float64 [mscorlib]System.Double::Parse(string)")
                     .append("\n")
@@ -138,14 +134,14 @@ public class Semantico implements Constants {
                     .append(id);
         }
         if (id.startsWith("s_")) {
-            code.append("call string [mscorlib]System.Console::ReadLine()")
+            codigo.append("call string [mscorlib]System.Console::ReadLine()")
                     .append("\n")
                     .append("stloc")
                     .append(" ")
                     .append(id);
         }
         if (id.startsWith("b_")) {
-            code.append("call string [mscorlib]System.Console::ReadLine()")
+            codigo.append("call string [mscorlib]System.Console::ReadLine()")
                     .append("\n")
                     .append("call bool [mscorlib]System.Boolean::Parse(string)")
                     .append("\n")
@@ -153,51 +149,51 @@ public class Semantico implements Constants {
                     .append(" ")
                     .append(id);
         }
-        this.code.append("\n");
+        this.codigo.append("\n");
     }
 
     private void acaoSemantica106(Token token) {
-        code.append("ldstr ").append(token.getLexeme())
+        codigo.append("ldstr ").append(token.getLexeme())
                 .append("\n")
                 .append("call void [mscorlib]System.Console::Write(string)")
                 .append("\n");
     }
 
     private void acaoSemantica108() {
-        final String type = typeStack.pop();
+        final String type = stackTipo.pop();
 
         if (type.equals(INT_TYPE)) {
-            code.append("conv.i8")
+            codigo.append("conv.i8")
                     .append("\n");
         }
 
         final String printCommand = String.format("call void [mscorlib]System.Console::Write(%s)", type);
-        code.append(printCommand)
+        codigo.append(printCommand)
                 .append("\n");
     }
 
     private void acaoSemantica109() {
         final String label2 = getLabelName();
-        labelStack.push(getLabelName());
-        labelStack.push(label2);
+        stackLabel.push(getLabelName());
+        stackLabel.push(label2);
 
-        code.append("brfalse")
+        codigo.append("brfalse")
                 .append(" ")
                 .append(label2)
                 .append("\n");
     }
 
     private void acaoSemantica110() {
-        String label1 = labelStack.pop();
-        String label2 = labelStack.pop();
+        String label1 = stackLabel.pop();
+        String label2 = stackLabel.pop();
 
-        code.append("br")
+        codigo.append("br")
                 .append(" ")
                 .append(label2)
                 .append("\n");
-        labelStack.push(label2);
+        stackLabel.push(label2);
 
-        code.append(label1)
+        codigo.append(label1)
                 .append(":")
                 .append("\n");
     }
@@ -205,18 +201,18 @@ public class Semantico implements Constants {
     private void acaoSemantica112() {
         String label = getLabelName();
 
-        code.append("brfalse")
+        codigo.append("brfalse")
                 .append(" ")
                 .append(label)
                 .append("\n");
 
-        labelStack.push(label);
+        stackLabel.push(label);
     }
 
     private void acaoSemantica111() {
-        final String label = labelStack.pop();
+        final String label = stackLabel.pop();
 
-        code.append(label)
+        codigo.append(label)
                 .append(":")
                 .append("\n");
     }
@@ -224,40 +220,40 @@ public class Semantico implements Constants {
     private void acaoSemantica113() {
         final String labelName = getLabelName();
 
-        code.append(labelName)
+        codigo.append(labelName)
                 .append(":")
                 .append("\n");
 
-        labelStack.push(labelName);
+        stackLabel.push(labelName);
     }
 
     private void acaoSemantica114() {
-        String label = labelStack.pop();
+        String label = stackLabel.pop();
 
-        code.append("brtrue")
+        codigo.append("brtrue")
                 .append(" ")
                 .append(label)
                 .append("\n");
     }
 
     private void acaoSemantica115() {
-        String label = labelStack.pop();
+        String label = stackLabel.pop();
 
-        code.append("brfalse")
+        codigo.append("brfalse")
                 .append(" ")
                 .append(label)
                 .append("\n");
     }
 
     private void acaoSemantica107() {
-        code.append("ldstr \"\\n\"")
+        codigo.append("ldstr \"\\n\"")
                 .append("\n")
                 .append("call void [mscorlib]System.Console::Write(string) ")
                 .append("\n");
     }
 
     private void acaoSemantica100() {
-        code = new StringBuilder("""
+        codigo = new StringBuilder("""
                 .assembly extern mscorlib {}
                 .assembly _codigo_objeto{}
                 .module _codigo_objeto.exe
@@ -269,7 +265,7 @@ public class Semantico implements Constants {
     }
 
     private void acaoSemantica101() {
-        code.append("""
+        codigo.append("""
                      ret
                   }
                 }""");
@@ -277,8 +273,8 @@ public class Semantico implements Constants {
 
 
     private void acaoSemantica128(Token token) {
-        typeStack.push(INT_TYPE);
-        code.append("ldc.i8")
+        stackTipo.push(INT_TYPE);
+        codigo.append("ldc.i8")
                 .append(" ")
                 .append(token.getLexeme())
                 .append("\n")
@@ -288,137 +284,137 @@ public class Semantico implements Constants {
     }
 
     private void acaoSemantica129(Token token) {
-        typeStack.push(FLOAT_TYPE);
-        code.append("ldc.r8")
+        stackTipo.push(FLOAT_TYPE);
+        codigo.append("ldc.r8")
                 .append(" ")
                 .append(token.getLexeme().replace(",", "."))
                 .append("\n");
     }
 
     private void acaoSemantica130(Token token) {
-        typeStack.push(STRING_TYPE);
-        code.append("ldstr")
+        stackTipo.push(STRING_TYPE);
+        codigo.append("ldstr")
                 .append(" ")
                 .append(token.getLexeme())
                 .append("\n");
     }
 
     private void acaoSemantica116() {
-        this.typeStack.pop();
-        this.typeStack.pop();
+        this.stackTipo.pop();
+        this.stackTipo.pop();
 
-        typeStack.push(BOOLEAN_TYPE);
+        stackTipo.push(BOOLEAN_TYPE);
 
-        code.append("and")
+        codigo.append("and")
                 .append("\n");
     }
 
     private void acaoSemantica117() {
-        this.typeStack.pop();
-        this.typeStack.pop();
+        this.stackTipo.pop();
+        this.stackTipo.pop();
 
-        typeStack.push(BOOLEAN_TYPE);
+        stackTipo.push(BOOLEAN_TYPE);
 
-        code.append("or")
+        codigo.append("or")
                 .append("\n");
     }
 
     private void acaoSemantica118() {
-        typeStack.push(BOOLEAN_TYPE);
-        code.append("ldc.i4.1")
+        stackTipo.push(BOOLEAN_TYPE);
+        codigo.append("ldc.i4.1")
                 .append("\n");
     }
 
     private void acaoSemantica119() {
-        typeStack.push(BOOLEAN_TYPE);
-        code.append("ldc.i4.0")
+        stackTipo.push(BOOLEAN_TYPE);
+        codigo.append("ldc.i4.0")
                 .append("\n");
     }
 
 
     private void acaoSemantica131() {
-        code.append("neg")
+        codigo.append("neg")
                 .append("\n");
     }
 
     private void acaoSemantica121(Token token) {
-        operadorRelacional = token.getLexeme();
+        operador = token.getLexeme();
     }
 
     private void acaoSemantica122(Token token) {
-        switch (this.operadorRelacional) {
+        switch (this.operador) {
             case "==":
-                code.append("ceq");
+                codigo.append("ceq");
                 break;
             case "!=":
-                code.append("ceq")
+                codigo.append("ceq")
                         .append("\n")
                         .append("ldc.i4.1")
                         .append("\n")
                         .append("xor");
                 break;
             case ">":
-                code.append("cgt");
+                codigo.append("cgt");
                 break;
             case "<":
-                code.append("clt");
+                codigo.append("clt");
                 break;
             default:
         }
-        code.append("\n");
-        typeStack.push(BOOLEAN_TYPE);
+        codigo.append("\n");
+        stackTipo.push(BOOLEAN_TYPE);
     }
 
 
     private void acaoSemantica123() {
-        String firstOperandType = this.typeStack.pop();
-        String secondOperandType = this.typeStack.pop();
+        String firstOperandType = this.stackTipo.pop();
+        String secondOperandType = this.stackTipo.pop();
 
         if (firstOperandType.equals(FLOAT_TYPE) || secondOperandType.equals(FLOAT_TYPE)) {
-            typeStack.push(FLOAT_TYPE);
-        } else typeStack.push(INT_TYPE);
+            stackTipo.push(FLOAT_TYPE);
+        } else stackTipo.push(INT_TYPE);
 
-        code.append("add")
+        codigo.append("add")
                 .append("\n");
     }
 
     private void acaoSemantica124() {
-        String firstOperandType = this.typeStack.pop();
-        String secondOperandType = this.typeStack.pop();
+        String firstOperandType = this.stackTipo.pop();
+        String secondOperandType = this.stackTipo.pop();
 
         if (firstOperandType.equals(FLOAT_TYPE) || secondOperandType.equals(FLOAT_TYPE)) {
-            typeStack.push(FLOAT_TYPE);
+            stackTipo.push(FLOAT_TYPE);
         } else {
-            typeStack.push(INT_TYPE);
+            stackTipo.push(INT_TYPE);
         }
 
-        code.append("sub")
+        codigo.append("sub")
                 .append("\n");
     }
 
     private void acaoSemantica125() {
-        String firstOperandType = this.typeStack.pop();
-        String secondOperandType = this.typeStack.pop();
+        String firstOperandType = this.stackTipo.pop();
+        String secondOperandType = this.stackTipo.pop();
 
         if (firstOperandType.equals(FLOAT_TYPE) || secondOperandType.equals(FLOAT_TYPE)) {
-            typeStack.push(FLOAT_TYPE);
-        } else typeStack.push(INT_TYPE);
+            stackTipo.push(FLOAT_TYPE);
+        } else stackTipo.push(INT_TYPE);
 
-        code.append("mul")
+        codigo.append("mul")
                 .append("\n");
     }
 
     private void acaoSemantica126() {
-        this.typeStack.pop();
-        this.typeStack.pop();
+        this.stackTipo.pop();
+        this.stackTipo.pop();
 
-        typeStack.push(FLOAT_TYPE);
-        code.append("div")
+        stackTipo.push(FLOAT_TYPE);
+        codigo.append("div")
                 .append("\n");
     }
 
     private void acaoSemantica120() {
-        code.append("ldc.i4.1")
+        codigo.append("ldc.i4.1")
                 .append("\n")
                 .append("xor")
                 .append("\n");
@@ -427,35 +423,35 @@ public class Semantico implements Constants {
     private void acaoSemantica127(Token token) throws SemanticError {
         final String id = token.getLexeme();
 
-        tabelaSimbolos.stream()
+        simbolos.stream()
                 .filter(v -> v.equals(id))
                 .findFirst()
                 .orElseThrow(() -> new SemanticError(id + " não declarado", token.getPosition()));
 
-        code.append("ldloc ")
+        codigo.append("ldloc ")
                 .append(id)
                 .append("\n");
 
         if (id.startsWith("i_")) {
-            typeStack.push(INT_TYPE);
-            code.append("conv.r8")
+            stackTipo.push(INT_TYPE);
+            codigo.append("conv.r8")
                     .append("\n");
         } else if (id.startsWith("f_")) {
-            typeStack.push(FLOAT_TYPE);
+            stackTipo.push(FLOAT_TYPE);
         } else if (id.startsWith("s_")) {
-            typeStack.push(STRING_TYPE);
+            stackTipo.push(STRING_TYPE);
         } else {
-            typeStack.push(BOOLEAN_TYPE);
+            stackTipo.push(BOOLEAN_TYPE);
         }
 
     }
 
     private String getLabelName() {
-        labelCounter++;
-        return "L" + labelCounter;
+        contadorLabel++;
+        return "L" + contadorLabel;
     }
 
-    public String getCode() {
-        return code.toString();
+    public String getCodigo() {
+        return codigo.toString();
     }
 }
