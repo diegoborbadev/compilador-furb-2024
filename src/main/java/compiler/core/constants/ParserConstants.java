@@ -1,4 +1,4 @@
-package AnalizadorLexico;
+package main.java.compiler.core.constants;
 
 public interface ParserConstants {
 

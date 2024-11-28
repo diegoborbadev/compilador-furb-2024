@@ -1,4 +1,8 @@
-package AnalizadorLexico;
+package main.java.compiler;
+
+import main.java.compiler.core.constants.Constants;
+import main.java.compiler.core.Token;
+import main.java.compiler.core.exceptions.SemanticError;
 
 import java.util.ArrayList;
 import java.util.List;

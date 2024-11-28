@@ -1,6 +1,11 @@
 package main.java;
 
-import AnalizadorLexico.*;
+import main.java.compiler.*;
+import main.java.compiler.core.Token;
+import main.java.compiler.core.exceptions.AnalysisError;
+import main.java.compiler.core.exceptions.LexicalError;
+import main.java.compiler.core.exceptions.SemanticError;
+import main.java.compiler.core.exceptions.SyntaticError;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

@@ -1,4 +1,4 @@
-package AnalizadorLexico;
+package main.java.compiler.core;
 
 public class Token {
     private int id;
