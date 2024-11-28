@@ -368,7 +368,7 @@ public class interfac extends JFrame {
 
         Token t = null;
         try {
-            if(!getTextoEditor().isEmpty()) {
+            if (!getTextoEditor().isEmpty()) {
                 sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
 
                 // codigo feito antes
@@ -377,8 +377,10 @@ public class interfac extends JFrame {
                         throw new LexicalError(verboseErrors.get(1), t.getLexeme(), t.getPosition());
                     }
                 }
+
             }
             jTextArea2.setText("programa compilado com sucesso");
+            salvarIl(semantico.getCodigoStringBuilder());
 
         } // mensagem: programa compilado com sucesso - área reservada para mensagens
         catch (LexicalError e) {
@@ -392,13 +394,15 @@ public class interfac extends JFrame {
             StringBuilder erro = getMensagemErroPadrao(e);
             // Se o id for 2 -> é palavra reservada
             boolean isPalavraReservada = e.getTokenId() == 2;
-            if(isPalavraReservada) {
+            if (isPalavraReservada) {
                 erro.append(e.getElement()).append(" palavra reservada inválida");
             } else {
                 String encontrado;
                 String esperado;
                 encontrado = classesId(e.getTokenId());
-                if(encontrado.isEmpty()) encontrado = e.getElement();
+                if (encontrado.isEmpty()) {
+                    encontrado = e.getElement();
+                }
                 esperado = e.getMessage();
                 int lenghtErroBase = erro.length();
                 erro.append("encontrado ").append(encontrado).append("\n");
@@ -410,6 +414,25 @@ public class interfac extends JFrame {
         }
 
     }//GEN-LAST:event_jMenuCompilarMouseClicked
+
+    private void salvarIl(StringBuilder cod) {
+        
+            String absolutePath = currentFile.getAbsolutePath();
+            
+            String pathWithoutExtension = absolutePath.replaceFirst("\\.txt$","");
+        
+            File file = new File(pathWithoutExtension + ".il");
+
+            // Gravar o conteúdo do StringBuilder no arquivo
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write(cod.toString());
+                System.out.println("Conteúdo gravado no arquivo com sucesso!");
+            } catch (IOException e) {
+                System.err.println("Erro ao gravar no arquivo: " + e.getMessage());
+            }
+            
+            
+    }
 
     private StringBuilder getMensagemErroPadrao(AnalysisError e) {
         StringBuilder erro = new StringBuilder("Erro na linha ");
