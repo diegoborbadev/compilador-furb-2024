@@ -167,7 +167,7 @@ public class Semantico implements Constants {
                     .append("\n");
         }
 
-        final String printCommand = String.format("call void [mscorlib]System.Console::Write(%s)", type);
+        final String printCommand = String.format("call void [mscorlib]System.Console::WriteLine(%s)", type);
         codigo.append(printCommand)
                 .append("\n");
     }
@@ -246,10 +246,7 @@ public class Semantico implements Constants {
     }
 
     private void acaoSemantica107() {
-        codigo.append("ldstr \"\\n\"")
-                .append("\n")
-                .append("call void [mscorlib]System.Console::Write(string) ")
-                .append("\n");
+        codigo.append("\n");
     }
 
     private void acaoSemantica100() {
@@ -259,15 +256,17 @@ public class Semantico implements Constants {
                 .module _codigo_objeto.exe
                 
                 .class public _UNICA{
-                  .method static public void _principal(){
-                     .entrypoint\s
+                                   
+                .method static public void _principal(){
+                .entrypoint\s
+                                   
                 """);
     }
 
     private void acaoSemantica101() {
         codigo.append("""
-                     ret
-                  }
+                ret
+                }
                 }""");
     }
 
@@ -453,5 +452,9 @@ public class Semantico implements Constants {
 
     public String getCodigo() {
         return codigo.toString();
+    }
+    
+    public StringBuilder getCodigoStringBuilder() {
+        return codigo;
     }
 }
