@@ -1,8 +1,8 @@
-package main.java.compiler;
+package main.java.compilador;
 
-import main.java.compiler.core.constants.Constants;
-import main.java.compiler.core.Token;
-import main.java.compiler.core.exceptions.SemanticError;
+import main.java.compilador.core.Token;
+import main.java.compilador.core.constants.Constants;
+import main.java.compilador.core.exceptions.SemanticError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +112,7 @@ public class Semantico implements Constants {
     }
 
     private void acaoSemantica104(Token token) {
-        this.tokens.add(token);
+        tokens.add(token);
     }
 
     private void acaoSemantica105(Token token) throws SemanticError {
@@ -153,7 +153,7 @@ public class Semantico implements Constants {
                     .append(" ")
                     .append(id);
         }
-        this.codigo.append("\n");
+        codigo.append("\n");
     }
 
     private void acaoSemantica106(Token token) {
@@ -255,16 +255,16 @@ public class Semantico implements Constants {
 
     private void acaoSemantica100() {
         codigo = new StringBuilder("""
-                .assembly extern mscorlib {}
-                .assembly _codigo_objeto{}
-                .module _codigo_objeto.exe
-                
-                .class public _UNICA{
-                                   
-                .method static public void _principal(){
-                .entrypoint\s
-                                   
-                """);
+                 .assembly extern mscorlib {}
+                 .assembly _codigo_objeto{}
+                 .module _codigo_objeto.exe
+                \s
+                 .class public _UNICA{
+                                   \s
+                 .method static public void _principal(){
+                 .entrypoint\s
+                                   \s
+                \s""");
     }
 
     private void acaoSemantica101() {
@@ -303,8 +303,8 @@ public class Semantico implements Constants {
     }
 
     private void acaoSemantica116() {
-        this.stackTipo.pop();
-        this.stackTipo.pop();
+        stackTipo.pop();
+        stackTipo.pop();
 
         stackTipo.push(BOOLEAN_TYPE);
 
@@ -313,8 +313,8 @@ public class Semantico implements Constants {
     }
 
     private void acaoSemantica117() {
-        this.stackTipo.pop();
-        this.stackTipo.pop();
+        stackTipo.pop();
+        stackTipo.pop();
 
         stackTipo.push(BOOLEAN_TYPE);
 
@@ -345,7 +345,7 @@ public class Semantico implements Constants {
     }
 
     private void acaoSemantica122(Token token) {
-        switch (this.operador) {
+        switch (operador) {
             case "==":
                 codigo.append("ceq");
                 break;
@@ -370,8 +370,8 @@ public class Semantico implements Constants {
 
 
     private void acaoSemantica123() {
-        String firstOperandType = this.stackTipo.pop();
-        String secondOperandType = this.stackTipo.pop();
+        String firstOperandType = stackTipo.pop();
+        String secondOperandType = stackTipo.pop();
 
         if (firstOperandType.equals(FLOAT_TYPE) || secondOperandType.equals(FLOAT_TYPE)) {
             stackTipo.push(FLOAT_TYPE);
@@ -382,8 +382,8 @@ public class Semantico implements Constants {
     }
 
     private void acaoSemantica124() {
-        String firstOperandType = this.stackTipo.pop();
-        String secondOperandType = this.stackTipo.pop();
+        String firstOperandType = stackTipo.pop();
+        String secondOperandType = stackTipo.pop();
 
         if (firstOperandType.equals(FLOAT_TYPE) || secondOperandType.equals(FLOAT_TYPE)) {
             stackTipo.push(FLOAT_TYPE);
@@ -396,8 +396,8 @@ public class Semantico implements Constants {
     }
 
     private void acaoSemantica125() {
-        String firstOperandType = this.stackTipo.pop();
-        String secondOperandType = this.stackTipo.pop();
+        String firstOperandType = stackTipo.pop();
+        String secondOperandType = stackTipo.pop();
 
         if (firstOperandType.equals(FLOAT_TYPE) || secondOperandType.equals(FLOAT_TYPE)) {
             stackTipo.push(FLOAT_TYPE);
@@ -408,8 +408,8 @@ public class Semantico implements Constants {
     }
 
     private void acaoSemantica126() {
-        this.stackTipo.pop();
-        this.stackTipo.pop();
+        stackTipo.pop();
+        stackTipo.pop();
 
         stackTipo.push(FLOAT_TYPE);
         codigo.append("div")
@@ -457,7 +457,7 @@ public class Semantico implements Constants {
     public String getCodigo() {
         return codigo.toString();
     }
-    
+
     public StringBuilder getCodigoStringBuilder() {
         return codigo;
     }

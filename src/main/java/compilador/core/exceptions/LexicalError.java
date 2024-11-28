@@ -1,4 +1,4 @@
-package main.java.compiler.core.exceptions;
+package main.java.compilador.core.exceptions;
 
 public class LexicalError extends AnalysisError {
 

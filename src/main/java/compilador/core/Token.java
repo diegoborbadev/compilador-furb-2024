@@ -1,4 +1,4 @@
-package main.java.compiler.core;
+package main.java.compilador.core;
 
 public class Token {
     private int id;

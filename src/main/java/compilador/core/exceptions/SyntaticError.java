@@ -1,6 +1,6 @@
-package main.java.compiler.core.exceptions;
+package main.java.compilador.core.exceptions;
 
-import main.java.compiler.core.Token;
+import main.java.compilador.core.Token;
 
 public class SyntaticError extends AnalysisError {
 

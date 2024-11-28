@@ -1,8 +1,8 @@
-package main.java.compiler;
+package main.java.compilador;
 
-import main.java.compiler.core.constants.Constants;
-import main.java.compiler.core.Token;
-import main.java.compiler.core.exceptions.LexicalError;
+import main.java.compilador.core.constants.Constants;
+import main.java.compilador.core.Token;
+import main.java.compilador.core.exceptions.LexicalError;
 
 public class Lexico implements Constants {
     private int position;
