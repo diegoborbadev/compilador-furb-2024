@@ -1,6 +1,8 @@
 package main.java;
 
-import main.java.compilador.*;
+import main.java.compilador.Lexico;
+import main.java.compilador.Semantico;
+import main.java.compilador.Sintatico;
 import main.java.compilador.core.Token;
 import main.java.compilador.core.exceptions.AnalysisError;
 import main.java.compilador.core.exceptions.LexicalError;
@@ -384,7 +386,7 @@ public class interfac extends JFrame {
             }
             jTextArea2.setText("programa compilado com sucesso");
 
-            salvarIl(semantico.getCodigoStringBuilder());
+            salvarIl(semantico.getCodigo());
         } // mensagem: programa compilado com sucesso - área reservada para mensagens
         catch (LexicalError e) {
             StringBuilder erro = getMensagemErroPadrao(e);
@@ -420,26 +422,23 @@ public class interfac extends JFrame {
 
     }//GEN-LAST:event_jMenuCompilarMouseClicked
 
-    private void salvarIl(StringBuilder cod) {
-
+    private void salvarIl(String cod) {
         String absolutePath = currentFile.getAbsolutePath();
 
-        String pathWithoutExtension = absolutePath.replaceFirst("\\.txt$","");
+        String pathWithoutExtension = absolutePath.replaceFirst("\\.txt$", "");
 
         File file = new File(pathWithoutExtension + ".il");
 
         // Gravar o conteúdo do StringBuilder no arquivo
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(cod.toString());
+            writer.write(cod);
             System.out.println("Conteúdo gravado no arquivo com sucesso!");
         } catch (IOException e) {
             System.err.println("Erro ao gravar no arquivo: " + e.getMessage());
         }
     }
-    
-    
-    
-    
+
+
     private StringBuilder getMensagemErroPadrao(AnalysisError e) {
         StringBuilder erro = new StringBuilder("Erro na linha ");
         int linha;
