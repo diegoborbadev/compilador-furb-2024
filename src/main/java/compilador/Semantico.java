@@ -360,10 +360,10 @@ public class Semantico implements Constants {
     }
 
     private void verificaTipoNumeroDoisOperadores() {
-        String firstOperandType = stackTipo.pop();
-        String secondOperandType = stackTipo.pop();
+        String operador1 = stackTipo.pop();
+        String operador2 = stackTipo.pop();
 
-        if (firstOperandType.equals(FLOAT_TYPE) || secondOperandType.equals(FLOAT_TYPE)) {
+        if (operador1.equals(FLOAT_TYPE) || operador2.equals(FLOAT_TYPE)) {
             stackTipo.push(FLOAT_TYPE);
         } else stackTipo.push(INT_TYPE);
     }
