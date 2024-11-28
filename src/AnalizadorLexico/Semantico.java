@@ -2,425 +2,460 @@ package AnalizadorLexico;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 
-public class Semantico implements Constants {  // implements Constants
+public class Semantico implements Constants {
 
-    // declarar os registros semanticos como atributos do analisador semantico
-    List<String> codigo = new ArrayList<>();
-    Stack<String> pilhaTipos;
-    String operador_relacional = "";
-    Stack<String> pilhaRotulos;
-    List<String> listaIdentificadores = new ArrayList<>();
-    List<String> tabelaSimbolos = new ArrayList<>();
-    int contRotulo = 1;
+    private static final String INT_TYPE = "int64";
+    private static final String FLOAT_TYPE = "float64";
+    private static final String BOOLEAN_TYPE = "bool";
+    private static final String STRING_TYPE = "string";
 
+    private StringBuilder code;
+    private int labelCounter;
+    private String operadorRelacional;
+    private final Stack<String> typeStack = new Stack<>();
+    private final Stack<String> labelStack = new Stack<>();
+    private final List<Token> listaTokens = new ArrayList<>();
+    private final List<String> tabelaSimbolos = new ArrayList<>();
+
+    /**
+     * Executa as acoes recebidas de acordo com o codigo
+     */
     public void executeAction(int action, Token token) throws SemanticError {
-        System.out.println("Ação #" + action + ", Token: " + token);
         switch (action) {
-            case 100:
-                acaoSemantica100();
-            case 101:
-                acaoSemantica101();
-            case 108:
-                acaoSemantica108();
-            case 123:
-                acaoSemantica123();
-            case 128:
-                acaoSemantica128(token);
-            case 129:
-                acaoSemantica129(token);
-            case 130:
-                acaoSemantica130(token);
-            case 118:
-                acaoSemantica118();
-            case 119:
-                acaoSemantica119();
-            case 131:
-                acaoSemantica131(token);
-            case 124:
-                acaoSemantica124();
-            case 125:
-                acaoSemantica125();
-            case 126:
-                acaoSemantica126();
-            case 121:
-                acaoSemantica121(token);
-            case 122:
-                acaoSemantica122(token);   // ver se a logica esta correta
-            case 120:
-                acaoSemantica120(token);
-            case 116:
-                acaoSemantica116(token); 
-            case 117:
-                acaoSemantica117(token); 
-            case 127:
-                acaoSemantica127(token); // lançar erro
-            case 107:
-                acaoSemantica107(token); // quebra de linha, ver como vamos implementar isso
-            case 104:
-                acaoSemantica104(token);
-            case 102:
-                acaoSemantica102(token); // lançar erro
-            case 103:
-                acaoSemantica103(token); // lançar erro
-            case 106:
-                acaoSemantica106(token);
-            case 105:
-                acaoSemantica105(token);
-            case 109:
-                acaoSemantica109(token);
-            case 110:
-                acaoSemantica110(token);
-            case 111:
-                acaoSemantica111(token);
-            case 112:
-                acaoSemantica112(token);
-            case 113:
-                acaoSemantica113(token);
-            case 114:
-                acaoSemantica114(token);
-            case 115:
-                acaoSemantica115(token);
-            default:
-                System.out.println("Ação ainda não implementada");
+            case 100 -> acaoSemantica100();
+            case 101 -> acaoSemantica101();
+            case 102 -> acaoSemantica102();
+            case 103 -> acaoSemantica103();
+            case 104 -> acaoSemantica104(token);
+            case 105 -> acaoSemantica105(token);
+            case 106 -> acaoSemantica106(token);
+            case 107 -> acaoSemantica107();
+            case 108 -> acaoSemantica108();
+            case 109 -> acaoSemantica109();
+            case 110 -> acaoSemantica110();
+            case 111 -> acaoSemantica111();
+            case 112 -> acaoSemantica112();
+            case 113 -> acaoSemantica113();
+            case 114 -> acaoSemantica114();
+            case 115 -> acaoSemantica115();
+            case 116 -> acaoSemantica116();
+            case 117 -> acaoSemantica117();
+            case 118 -> acaoSemantica118();
+            case 119 -> acaoSemantica119();
+            case 120 -> acaoSemantica120();
+            case 121 -> acaoSemantica121(token);
+            case 122 -> acaoSemantica122(token);
+            case 123 -> acaoSemantica123();
+            case 124 -> acaoSemantica124();
+            case 125 -> acaoSemantica125();
+            case 126 -> acaoSemantica126();
+            case 127 -> acaoSemantica127(token);
+            case 128 -> acaoSemantica128(token);
+            case 129 -> acaoSemantica129(token);
+            case 130 -> acaoSemantica130(token);
+            case 131 -> acaoSemantica131();
         }
 
-        switch (pilhaTipos.pop()) {
-            case "int64":
-                codigo.add("conv.r8");
-                codigo.add("call void [mscorlib]System.Console::WriteLine(int64)");
-                break;
-            case "float64":
-                codigo.add("call void [mscorlib]System.Console::WriteLine(float64)");
-                break;
-            case "bool":
-                codigo.add("call void [mscorlib]System.Console::WriteLine(bool)");
-                break;
-            case "string":
-                codigo.add("call void [mscorlib]System.Console::WriteLine(string)");
-                break;
-            default:
-                break;
-        }
     }
 
-    private void acaoSemantica100() {  // cabeçalho
-        codigo.add(".assembly extern mscorlib {}");
-        codigo.add("/n");
-        codigo.add(".assembly _codigo_objeto{}");
-        codigo.add("/n");
-        codigo.add(".module _codigo_objeto.exe");
-        codigo.add("/n");
-        codigo.add(".class public UNICA{");
-        codigo.add("/n");
-        codigo.add(".method static public void _principal() {");
-        codigo.add("/n");
-        codigo.add(".entrypoint");
-    }
+    private void acaoSemantica102() throws SemanticError {
+        for (Token token : listaTokens) {
+            final String id = token.getLexeme();
+            final String type;
 
-    private void acaoSemantica101() { // finalizar o programa
-        codigo.add("ret");
-        codigo.add("/n");
-        codigo.add("}");
-        codigo.add("/n");
-        codigo.add("}");
-    }
+            final Optional<String> simbol = tabelaSimbolos.stream()
+                    .filter(v -> v.equals(id))
+                    .findFirst();
 
-    private void acaoSemantica108() { // <saida> write
-        String tipo1 = pilhaTipos.pop();
-
-        codigo.add("conv.r8");
-        codigo.add("call void [mscorlib]System.Console::Write(" + tipo1 + ")");
-    }
-
-    private void acaoSemantica123() { // soma
-        String tipo1 = pilhaTipos.pop();
-        String tipo2 = pilhaTipos.pop();
-        if (tipo1 == "int64" && tipo2 == "int64") {
-            pilhaTipos.add("int64");
-        } else {
-            pilhaTipos.add("float64");
-        }
-        codigo.add("add");
-    }
-
-    private void acaoSemantica128(Token token) { // expressao para constante_int
-        pilhaTipos.add("int64");
-        codigo.add("ldc.i8 " + token.getLexeme());
-        codigo.add("conv.r8");
-    }
-
-    private void acaoSemantica129(Token token) { // expressao para constante_float
-        pilhaTipos.add("float64");
-        codigo.add("ldc.r8 " + token.getLexeme().replace(",", "."));
-    }
-
-    private void acaoSemantica130(Token token) { // expressão para constante_string
-        pilhaTipos.add("string");
-        codigo.add("ldstr " + token.getLexeme());
-    }
-
-    private void acaoSemantica118() { // expressão para true
-        pilhaTipos.add("bool");
-        codigo.add("ldc.i4.1");
-    }
-
-    private void acaoSemantica119() { // expressoa para false
-        pilhaTipos.add("bool");
-        codigo.add("ldc.i4.0");
-    }
-
-    private void acaoSemantica131(Token token) {  // negação
-        codigo.add("ldc.i4.1");
-        codigo.add("xor");
-    }
-
-    private void acaoSemantica124() { // subtração
-        String tipo1 = pilhaTipos.pop();
-        String tipo2 = pilhaTipos.pop();
-        if (tipo1 == "int64" && tipo2 == "int64") {
-            pilhaTipos.add("int64");
-        } else {
-            pilhaTipos.add("float64");
-        }
-        codigo.add("sub");
-    }
-
-    private void acaoSemantica125() { // multiplicação
-        String tipo1 = pilhaTipos.pop();
-        String tipo2 = pilhaTipos.pop();
-        if (tipo1 == "int64" && tipo2 == "int64") {
-            pilhaTipos.push("int64");
-        } else {
-            pilhaTipos.push("float64");
-        }
-        codigo.add("mul");
-    }
-
-    private void acaoSemantica126() {   // divisão
-        String tipo1 = pilhaTipos.pop();
-        String tipo2 = pilhaTipos.pop();
-        if (tipo1.equals("int64") && tipo2.equals("int64")) {
-            pilhaTipos.push("int64");
-        } else {
-            pilhaTipos.push("float64");
-        }
-        codigo.add("div");
-    }
-
-    private void acaoSemantica121(Token token) {  // guarda o operador relacional
-        operador_relacional = token.getLexeme();
-    }
-
-    private void acaoSemantica122(Token token) {  // efetuar ação do operador relacional
-        String tipo1 = pilhaTipos.pop(); 
-        String tipo2 = pilhaTipos.pop();
-        String operador = operador_relacional;
-        
-        pilhaTipos.push("bool");
-        
-        if (operador == "ceq") {
-            codigo.add("ceq");
-        } else if (operador == "cgt") {
-            codigo.add("cgt");
-        } else if (operador == "clt") {
-            codigo.add("clt");
-        }
-    }
-
-    private void acaoSemantica120(Token token) { // operador lógico unário "!"
-        codigo.add("ldc.i4.1");
-        codigo.add("xor");
-    }
-
-    private void acaoSemantica116(Token token) { // && ou ||
-        String tipo1 = pilhaTipos.pop();
-        String tipo2 = pilhaTipos.pop();
-        codigo.add("and");
-        pilhaTipos.add("bool");
-    }
-
-    private void acaoSemantica117(Token token) {
-        String tipo1 = pilhaTipos.pop();
-        String tipo2 = pilhaTipos.pop();
-        codigo.add("or");
-        pilhaTipos.add("bool");
-    }
-
-    private void acaoSemantica127(Token token) {
-        for (int i = 0; i <= tabelaSimbolos.size(); i++) {
-            if (tabelaSimbolos.get(i).equals(token.getLexeme())) {
-                char tipoToken = token.getLexeme().charAt(0);
-                switch (tipoToken) {
-                    case 'i':
-                        pilhaTipos.add("int64");
-                        codigo.add(" ldloc " + token.getLexeme());
-                        codigo.add("conv.r8");
-                        break;
-                    case 'f':
-                        pilhaTipos.add("float64");
-                        codigo.add(" ldloc " + token.getLexeme());
-                        break;
-                    case 'b':
-                        pilhaTipos.add("bool");
-                        codigo.add(" ldloc " + token.getLexeme());
-                        break;
-                    case 's':
-                        pilhaTipos.add("string");
-                        codigo.add(" ldloc " + token.getLexeme());
-                        break;
-                    default:
-                        break;
-                }
+            if (simbol.isPresent()) {
+                throw new SemanticError(id + " já declarado", token.getPosition());
             }
+
+            tabelaSimbolos.add(id);
+
+            if (id.startsWith("i_")) {
+                type = INT_TYPE;
+            } else if (id.startsWith("f_")) {
+                type = FLOAT_TYPE;
+            } else if (id.startsWith("s_")) {
+                type = STRING_TYPE;
+            } else {
+                type = BOOLEAN_TYPE;
+            }
+
+            code.append(String.format(".locals (%s %s)", type, id))
+                    .append("\n");
         }
-        // encerrar a execução e apontar erro semântico, 
-        //indicando a linha e apresentando a mensagem token.getLexeme não declarado 
+
+        listaTokens.clear();
     }
 
-    private void acaoSemantica107(Token token) { // quebra de linha
-        codigo.add("\n");
+    private void acaoSemantica103() throws SemanticError {
+        String expressionType = typeStack.pop();
+        if (expressionType.equals(INT_TYPE)) {
+            code.append("conv.i8")
+                    .append("\n");
+        }
+        for (Token token : listaTokens) {
+            final String id = token.getLexeme();
+            boolean idDeclared = tabelaSimbolos.contains(id);
+            if (!idDeclared) throw new SemanticError(id + " não declarado", token.getPosition());
+            code.append("stloc")
+                    .append(" ")
+                    .append(id)
+                    .append("\n");
+        }
+        listaTokens.clear();
     }
 
     private void acaoSemantica104(Token token) {
-        listaIdentificadores.add(token.getLexeme());
+        this.listaTokens.add(token);
     }
 
-    private void acaoSemantica102(Token token) {
-        for (int i = 0; i <= tabelaSimbolos.size(); i++) {
-            if (!tabelaSimbolos.get(i).equals(token.getLexeme())) {
-                tabelaSimbolos.add(token.getLexeme());
-                char tipoToken = token.getLexeme().charAt(0);
-                switch (tipoToken) {
-                    case 'i':
-                        codigo.add(" .locals(int64) ");
-                        break;
-                    case 'f':
-                        codigo.add(" .locals(float64) ");
-                        break;
-                    case 'b':
-                        codigo.add(" .locals(bool) ");
-                        break;
-                    case 's':
-                        codigo.add(" .locals(string) ");
-                        break;
-                    default:
-                        break;
-                }
-                
-            }
+    private void acaoSemantica105(Token token) throws SemanticError {
+        String id = token.getLexeme();
+        boolean isIdDeclared = tabelaSimbolos.contains(id);
+        if (!isIdDeclared) throw new SemanticError(id + " não declarado", token.getPosition());
+        if (id.startsWith("i_")) {
+            code.append("call string [mscorlib]System.Console::ReadLine()")
+                    .append("\n")
+                    .append("call int64 [mscorlib]System.Int64::Parse(string)")
+                    .append("\n")
+                    .append("stloc")
+                    .append(" ")
+                    .append(id);
         }
-        listaIdentificadores.clear();
-        // se não encontrar no for
-        // encerrar a execução e apontar erro semântico, 
-        //indicando a linha e apresentando a token.getLexeme já declarado (por exemplo: i_area já declarado);
-
-    }
-
-    private void acaoSemantica103(Token token) {
-        String tipo = pilhaTipos.pop();
-        if (tipo.equals("int64")) {
-            codigo.add("conv.i8");
+        if (id.startsWith("f_")) {
+            code.append("call string [mscorlib]System.Console::ReadLine()")
+                    .append("\n")
+                    .append("call float64 [mscorlib]System.Double::Parse(string)")
+                    .append("\n")
+                    .append("stloc")
+                    .append(" ")
+                    .append(id);
         }
-        for (int j = 0; j <= listaIdentificadores.size() - 1; j++) {
-            codigo.add("dup");
-            for (int i = 0; i <= tabelaSimbolos.size(); i++) {
-                if (tabelaSimbolos.get(i).equals(token.getLexeme())) {
-                    codigo.add("stloc " + listaIdentificadores.get(j));
-                }
-            }
-            // se não encontrar na tabela de simbolos
-            // encerrar a execução e apontar erro semântico, 
-            //indicando a linha e apresentando a token.getLexeme não declarado (por exemplo: i_area não declarado);
+        if (id.startsWith("s_")) {
+            code.append("call string [mscorlib]System.Console::ReadLine()")
+                    .append("\n")
+                    .append("stloc")
+                    .append(" ")
+                    .append(id);
         }
-
-        listaIdentificadores.clear();
+        if (id.startsWith("b_")) {
+            code.append("call string [mscorlib]System.Console::ReadLine()")
+                    .append("\n")
+                    .append("call bool [mscorlib]System.Boolean::Parse(string)")
+                    .append("\n")
+                    .append("stloc")
+                    .append(" ")
+                    .append(id);
+        }
+        this.code.append("\n");
     }
 
     private void acaoSemantica106(Token token) {
-        codigo.add("ldstr " + token.getLexeme());  // token.getLexeme() ??
-        codigo.add("call void [mscorlib]System.Console::Write(string)");
+        code.append("ldstr ").append(token.getLexeme())
+                .append("\n")
+                .append("call void [mscorlib]System.Console::Write(string)")
+                .append("\n");
     }
 
-    private void acaoSemantica105(Token token) {
-        for (int i = 0; i <= tabelaSimbolos.size(); i++) {
-            if (tabelaSimbolos.get(i).equals(token.getLexeme())) {
-                char tipoToken = token.getLexeme().charAt(0);
-                switch (tipoToken) {
-                    case 'i':
-                        codigo.add("call string [mscorlib]System.Console::ReadLine()");
-                        codigo.add("call int64 [mscorlib]System.Int64::Parse(string)");
-                        codigo.add("stloc " + token.getLexeme());
-                        break;
-                    case 'f':
-                        codigo.add("call string [mscorlib]System.Console::ReadLine()");
-                        codigo.add("call float64 [mscorlib]System.Double::Parse(string)");
-                        codigo.add("stloc " + token.getLexeme());
-                        break;
-                    case 'b':
-                        codigo.add("call string [mscorlib]System.Console::ReadLine()");
-                        codigo.add("call bool [mscorlib]System.Boolean::Parse(string)");
-                        codigo.add("stloc " + token.getLexeme());
-                        break;
-                    case 's':
-                        codigo.add("call string [mscorlib]System.Console::ReadLine()");
-                        codigo.add("stloc " + token.getLexeme());
-                        break;
-                    default:
-                        break;
-                }
-            }
+    private void acaoSemantica108() {
+        final String type = typeStack.pop();
+
+        if (type.equals(INT_TYPE)) {
+            code.append("conv.i8")
+                    .append("\n");
         }
-        // encerrar a execução e apontar erro semântico, 
-        //indicando a linha e apresentando a mensagem token.getLexeme não declarado 
+
+        final String printCommand = String.format("call void [mscorlib]System.Console::Write(%s)", type);
+        code.append(printCommand)
+                .append("\n");
+    }
+
+    private void acaoSemantica109() {
+        final String label2 = getLabelName();
+        labelStack.push(getLabelName());
+        labelStack.push(label2);
+
+        code.append("brfalse")
+                .append(" ")
+                .append(label2)
+                .append("\n");
+    }
+
+    private void acaoSemantica110() {
+        String label1 = labelStack.pop();
+        String label2 = labelStack.pop();
+
+        code.append("br")
+                .append(" ")
+                .append(label2)
+                .append("\n");
+        labelStack.push(label2);
+
+        code.append(label1)
+                .append(":")
+                .append("\n");
+    }
+
+    private void acaoSemantica112() {
+        String label = getLabelName();
+
+        code.append("brfalse")
+                .append(" ")
+                .append(label)
+                .append("\n");
+
+        labelStack.push(label);
+    }
+
+    private void acaoSemantica111() {
+        final String label = labelStack.pop();
+
+        code.append(label)
+                .append(":")
+                .append("\n");
+    }
+
+    private void acaoSemantica113() {
+        final String labelName = getLabelName();
+
+        code.append(labelName)
+                .append(":")
+                .append("\n");
+
+        labelStack.push(labelName);
+    }
+
+    private void acaoSemantica114() {
+        String label = labelStack.pop();
+
+        code.append("brtrue")
+                .append(" ")
+                .append(label)
+                .append("\n");
+    }
+
+    private void acaoSemantica115() {
+        String label = labelStack.pop();
+
+        code.append("brfalse")
+                .append(" ")
+                .append(label)
+                .append("\n");
+    }
+
+    private void acaoSemantica107() {
+        code.append("ldstr \"\\n\"")
+                .append("\n")
+                .append("call void [mscorlib]System.Console::Write(string) ")
+                .append("\n");
+    }
+
+    private void acaoSemantica100() {
+        code = new StringBuilder("""
+                .assembly extern mscorlib {}
+                .assembly _codigo_objeto{}
+                .module _codigo_objeto.exe
+                
+                .class public _UNICA{
+                  .method static public void _principal(){
+                     .entrypoint\s
+                """);
+    }
+
+    private void acaoSemantica101() {
+        code.append("""
+                     ret
+                  }
+                }""");
+    }
+
+
+    private void acaoSemantica128(Token token) {
+        typeStack.push(INT_TYPE);
+        code.append("ldc.i8")
+                .append(" ")
+                .append(token.getLexeme())
+                .append("\n")
+                .append("conv.r8")
+                .append("\n");
 
     }
 
-    private void acaoSemantica109(Token token) {
-        pilhaRotulos.add("novo_rotulo" + contRotulo);
-        contRotulo++;
-        codigo.add("brfalse novo_rotulo" + contRotulo);
-        pilhaRotulos.add("novo_rotulo" + contRotulo);
-        contRotulo++;
+    private void acaoSemantica129(Token token) {
+        typeStack.push(FLOAT_TYPE);
+        code.append("ldc.r8")
+                .append(" ")
+                .append(token.getLexeme().replace(",", "."))
+                .append("\n");
     }
 
-    private void acaoSemantica110(Token token) {
-        String rot2 = pilhaRotulos.pop();
-        String rot1 = pilhaRotulos.pop();
-        codigo.add("br " + rot1);
-        pilhaRotulos.add(rot1);
-
-        // rotular a próxima instrução do código objeto com o rótulo desempilhado (código: rotulo_desempilhado2:). 
-        codigo.add(rot2 + ":");
+    private void acaoSemantica130(Token token) {
+        typeStack.push(STRING_TYPE);
+        code.append("ldstr")
+                .append(" ")
+                .append(token.getLexeme())
+                .append("\n");
     }
 
-    private void acaoSemantica111(Token token) {
-        String rot = pilhaRotulos.pop();
-        //rotular a próxima instrução do código objeto com o rótulo desempilhado (código: rotulo_desempilhado:). 
-        codigo.add(rot + ":");
+    private void acaoSemantica116() {
+        this.typeStack.pop();
+        this.typeStack.pop();
+
+        typeStack.push(BOOLEAN_TYPE);
+
+        code.append("and")
+                .append("\n");
     }
 
-    private void acaoSemantica112(Token token) {
-        codigo.add("brfalse novo_rotulo" + contRotulo);
-        pilhaRotulos.add("novo_rotulo" + contRotulo);
-        contRotulo++;
+    private void acaoSemantica117() {
+        this.typeStack.pop();
+        this.typeStack.pop();
+
+        typeStack.push(BOOLEAN_TYPE);
+
+        code.append("or")
+                .append("\n");
     }
 
-    private void acaoSemantica113(Token token) { // antes do repeat
-        codigo.add("novo_rotulo" + contRotulo+":");
-        pilhaRotulos.add("novo_rotulo" + contRotulo);
-        contRotulo++;
+    private void acaoSemantica118() {
+        typeStack.push(BOOLEAN_TYPE);
+        code.append("ldc.i4.1")
+                .append("\n");
     }
 
-    private void acaoSemantica114(Token token) {
-        String rot = pilhaRotulos.pop();
-        codigo.add("brtrue " + rot);
+    private void acaoSemantica119() {
+        typeStack.push(BOOLEAN_TYPE);
+        code.append("ldc.i4.0")
+                .append("\n");
     }
 
-    private void acaoSemantica115(Token token) {
-        String rot = pilhaRotulos.pop();
-        codigo.add("brfalse " + rot);
+
+    private void acaoSemantica131() {
+        code.append("neg")
+                .append("\n");
     }
 
+    private void acaoSemantica121(Token token) {
+        operadorRelacional = token.getLexeme();
+    }
+
+    private void acaoSemantica122(Token token) {
+        switch (this.operadorRelacional) {
+            case "==":
+                code.append("ceq");
+                break;
+            case "!=":
+                code.append("ceq")
+                        .append("\n")
+                        .append("ldc.i4.1")
+                        .append("\n")
+                        .append("xor");
+                break;
+            case ">":
+                code.append("cgt");
+                break;
+            case "<":
+                code.append("clt");
+                break;
+            default:
+        }
+        code.append("\n");
+        typeStack.push(BOOLEAN_TYPE);
+    }
+
+
+    private void acaoSemantica123() {
+        String firstOperandType = this.typeStack.pop();
+        String secondOperandType = this.typeStack.pop();
+
+        if (firstOperandType.equals(FLOAT_TYPE) || secondOperandType.equals(FLOAT_TYPE)) {
+            typeStack.push(FLOAT_TYPE);
+        } else typeStack.push(INT_TYPE);
+
+        code.append("add")
+                .append("\n");
+    }
+
+    private void acaoSemantica124() {
+        String firstOperandType = this.typeStack.pop();
+        String secondOperandType = this.typeStack.pop();
+
+        if (firstOperandType.equals(FLOAT_TYPE) || secondOperandType.equals(FLOAT_TYPE)) {
+            typeStack.push(FLOAT_TYPE);
+        } else {
+            typeStack.push(INT_TYPE);
+        }
+
+        code.append("sub")
+                .append("\n");
+    }
+
+    private void acaoSemantica125() {
+        String firstOperandType = this.typeStack.pop();
+        String secondOperandType = this.typeStack.pop();
+
+        if (firstOperandType.equals(FLOAT_TYPE) || secondOperandType.equals(FLOAT_TYPE)) {
+            typeStack.push(FLOAT_TYPE);
+        } else typeStack.push(INT_TYPE);
+
+        code.append("mul")
+                .append("\n");
+    }
+
+    private void acaoSemantica126() {
+        this.typeStack.pop();
+        this.typeStack.pop();
+
+        typeStack.push(FLOAT_TYPE);
+        code.append("div")
+                .append("\n");
+    }
+
+    private void acaoSemantica120() {
+        code.append("ldc.i4.1")
+                .append("\n")
+                .append("xor")
+                .append("\n");
+    }
+
+    private void acaoSemantica127(Token token) throws SemanticError {
+        final String id = token.getLexeme();
+
+        tabelaSimbolos.stream()
+                .filter(v -> v.equals(id))
+                .findFirst()
+                .orElseThrow(() -> new SemanticError(id + " não declarado", token.getPosition()));
+
+        code.append("ldloc ")
+                .append(id)
+                .append("\n");
+
+        if (id.startsWith("i_")) {
+            typeStack.push(INT_TYPE);
+            code.append("conv.r8")
+                    .append("\n");
+        } else if (id.startsWith("f_")) {
+            typeStack.push(FLOAT_TYPE);
+        } else if (id.startsWith("s_")) {
+            typeStack.push(STRING_TYPE);
+        } else {
+            typeStack.push(BOOLEAN_TYPE);
+        }
+
+    }
+
+    private String getLabelName() {
+        labelCounter++;
+        return "L" + labelCounter;
+    }
+
+    public String getCode() {
+        return code.toString();
+    }
 }

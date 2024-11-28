@@ -406,7 +406,9 @@ public class interfac extends JFrame {
             }
             jTextArea2.setText(erro.toString());
         } catch (SemanticError e) {
-            //Trata erros semânticos      
+            StringBuilder erro = getMensagemErroPadrao(e);
+            erro.append(e.getMessage());
+            jTextArea2.setText(erro.toString());
         }
 
     }//GEN-LAST:event_jMenuCompilarMouseClicked
